@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View } from "react-native";
-
 import EditScreenInfo from "../components/EditScreenInfo";
 import { RootTabScreenProps } from "../types";
 
