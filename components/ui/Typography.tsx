@@ -1,8 +1,7 @@
 // button.tsx
 import React from "react";
-import { cva, type VariantProps } from "cva";
+import { cva, cx, type VariantProps } from "cva";
 import { Text } from "react-native";
-import { SvgProps } from "react-native-svg";
 
 const typographyStyles = cva("flex text-base font-normal tracking-wide", {
   variants: {
@@ -19,10 +18,13 @@ const typographyStyles = cva("flex text-base font-normal tracking-wide", {
   },
 });
 
-export interface Props extends VariantProps<typeof typographyStyles> {
+export interface TypographyProps extends VariantProps<typeof typographyStyles> {
   text?: string;
+  color?: string;
 }
 
-export const Typography: React.FC<Props> = ({ size = "copy", text }) => (
-  <Text className={typographyStyles({ size })}>{text}</Text>
-);
+export const Typography: React.FC<TypographyProps> = ({
+  size = "copy",
+  text,
+  color = "text-green-medium",
+}) => <Text className={cx(typographyStyles({ size }), color)}>{text}</Text>;

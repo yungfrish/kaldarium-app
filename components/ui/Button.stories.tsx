@@ -1,44 +1,42 @@
 import * as React from "react";
-import { View } from "react-native";
+import { View, ScrollView, SafeAreaView } from "react-native";
 import { storiesOf } from "@storybook/react-native";
-import { Button } from "@ui/Button";
-import ChevronBackward from "@svg/chevron_backward.svg";
+import { ButtonStory } from "./ButtonStories/ButtonStory";
 
 storiesOf("Button", module)
-  .add("Primary on Dark", () => (
-    <View className="flex-1 items-start justify-start bg-green-dark px-8 py-8">
-      <Button intent={"primary"} size="full" text={"Button Label"} />
-      <Button
-        intent={"primary"}
-        size="full"
-        text={"Button Label"}
-        svg={ChevronBackward}
-        disabled
-      />
-      <Button intent={"primary"} size="auto" svg={ChevronBackward} />
-    </View>
+  .add("Primary", () => (
+    <SafeAreaView>
+      <ScrollView>
+        <View className="bg-green-dark">
+          <ButtonStory intent="primary" />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   ))
   .add("Secondary on Dark", () => (
-    <View className="flex-1 items-start justify-start bg-white px-8 py-8">
-      <Button intent={"primary"} size="full" />
-      <Button intent={"primary"} size="auto" />
-    </View>
+    <SafeAreaView>
+      <ScrollView>
+        <View className="bg-green-dark">
+          <ButtonStory intent="secondaryDark" textColor="text-white" />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   ))
   .add("Secondary on Light", () => (
-    <View className="flex-1 items-start justify-start bg-white px-8 py-8">
-      <Button intent={"primary"} size="full" />
-      <Button intent={"primary"} size="auto" />
-    </View>
+    <SafeAreaView>
+      <ScrollView>
+        <View className="bg-yellow-light-100">
+          <ButtonStory intent="secondaryLight" />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   ))
-  .add("Tertiary on Dark", () => (
-    <View className="flex-1 items-start justify-start bg-white px-8 py-8">
-      <Button intent={"primary"} size="full" />
-      <Button intent={"primary"} size="auto" />
-    </View>
-  ))
-  .add("Tertiary on Light", () => (
-    <View className="flex-1 items-start justify-start bg-white px-8 py-8">
-      <Button intent={"primary"} size="full" />
-      <Button intent={"primary"} size="auto" />
-    </View>
+  .add("Tertiary", () => (
+    <SafeAreaView>
+      <ScrollView>
+        <View className="bg-rose">
+          <ButtonStory intent="tertiary" />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   ));
