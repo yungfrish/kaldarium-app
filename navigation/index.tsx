@@ -15,6 +15,7 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import StorybookScreen from "../screens/StorybookScreen";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 import {
   RootStackParamList,
@@ -23,10 +24,14 @@ import {
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 
+const queryClient = new QueryClient();
+
 export default function Navigation() {
   return (
     <NavigationContainer linking={LinkingConfiguration} theme={DefaultTheme}>
-      <RootNavigator />
+      <QueryClientProvider client={queryClient}>
+        <RootNavigator />
+      </QueryClientProvider>
     </NavigationContainer>
   );
 }

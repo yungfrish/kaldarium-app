@@ -34,6 +34,9 @@ module.exports = {
       borderRadius: {
         large: "1.25rem",
       },
+      boxShadow: {
+        "button-primary": "0px 24px 32px rgba(255, 215, 101, 0.2)",
+      },
     },
   },
   plugins: [],
