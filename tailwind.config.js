@@ -9,6 +9,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // general
         green: {
           dark: "#0A3435",
           medium: "#165556",
@@ -24,20 +25,49 @@ module.exports = {
         },
         gray: {
           dark: "#273444",
-          DEFAULT: "#8492a6",
-          light: "#d3dce6",
+          DEFAULT: "#8492A6",
+          light: "#D3DCE6",
         },
         rose: "#FFC5D3",
-        blue: "#1fb6ff",
-        purple: "#7e5bef",
-        pink: "#ff49db",
         orange: "#FF9B68",
+        error: "#FF5170",
+
+        // plants
+        karotte: "#FDE5C6",
+        gurke: "#EDF1E1",
+        tomate: "#FFE3DA",
+        kartoffel: "#F2ECD6",
       },
       borderRadius: {
-        large: "1.25rem",
+        full: "100%",
+        20: "20px",
+        16: "16px",
+        12: "12px",
+        8: "8px",
+      },
+      borderWidth: {
+        2: "2px",
       },
       boxShadow: {
         "button-primary": "0px 24px 32px rgba(255, 215, 101, 0.2)",
+      },
+      spacing: {
+        96: "96px",
+        72: "72px",
+        32: "32px",
+        24: "24px",
+        20: "20px",
+        16: "16px",
+        12: "12px",
+        8: "8px",
+        4: "4px",
+      },
+      opacity: {
+        100: "1",
+        40: ".4",
+        30: ".3",
+        20: ".2",
+        10: ".1",
       },
     },
   },
