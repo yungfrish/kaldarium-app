@@ -8,6 +8,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        fraunces: ["FrauncesRegular"],
+        frauncesSemi: ["FrauncesSemi"],
+        skModernist: ["SkModernist"],
+      },
       colors: {
         // general
         green: {
@@ -69,11 +74,6 @@ module.exports = {
       backdropBlur: {
         DEFAULT: "8px",
         xl: "40px",
-      },
-      boxShadow: {
-        xl: "0 24px 32px 0 rgba(0, 0, 0, 0.2)",
-        md: "0 12px 24px 0 rgba(0, 0, 0, 0.2)",
-        sm: "0 8px 24px 0 rgba(0, 0, 0, 0.2)",
       },
     },
   },

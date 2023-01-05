@@ -13,21 +13,20 @@ export default function TabOneScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View>
-        {plants.map((plant) => (
-          <>
-            <Image
-              source={{
-                uri: `${KALDARIUM_SUPABASE_IMAGE_BUCKET_URL}plants/${plant.imageurl}`,
-              }}
-            />
+      {plants.map((plant) => (
+        <View key={plant.id}>
+          <Image
+            source={{
+              uri: `${KALDARIUM_SUPABASE_IMAGE_BUCKET_URL}/plants/${plant.title}.png`,
+            }}
+            style={{ width: 100, height: 100 }}
+          />
 
-            <Text style={styles.text} key={plant.id}>
-              {plant.title}
-            </Text>
-          </>
-        ))}
-      </View>
+          <Text style={styles.text} key={plant.id}>
+            {plant.title}
+          </Text>
+        </View>
+      ))}
       <View style={styles.separator} />
     </View>
   );

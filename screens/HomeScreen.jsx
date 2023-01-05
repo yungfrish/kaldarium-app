@@ -3,9 +3,11 @@ import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>This screen doesn't exist.</Text>
+      <Text className="font-skModernist" style={styles.title}>
+        This screen doesn't exist.
+      </Text>
       <TouchableOpacity
-        onPress={() => navigation.replace("/plants")}
+        onPress={() => navigation.replace("Plants")}
         style={styles.link}
       >
         <Text style={styles.linkText}>Go to plants screen!</Text>

@@ -50,6 +50,9 @@ export default function useCachedResources() {
         // Load fonts
         await Font.loadAsync({
           ...FontAwesome.font,
+          FrauncesRegular: require("../assets/fonts/Fraunces-Regular.ttf"),
+          FrauncesSemi: require("../assets/fonts/Fraunces-SemiBoldItalic.ttf"),
+          SkModernist: require("../assets/fonts/Sk-Modernist-Bold.otf"),
         });
 
         await getPlants();
