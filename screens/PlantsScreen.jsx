@@ -2,7 +2,8 @@ import * as React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { getObjectValue } from "../helper/AsyncStorage";
 import { KALDARIUM_SUPABASE_IMAGE_BUCKET_URL } from "@env";
-import { Typography } from "../components/ui/Typography";
+import { Typography } from "@ui/Typography";
+import { Tag } from "@ui/Tag/Tag";
 
 export default function TabOneScreen({ navigation }) {
   const { data: plants, isLoading } = getObjectValue("plants");
@@ -26,6 +27,13 @@ export default function TabOneScreen({ navigation }) {
           <Typography size="copy" key={plant.id}>
             {plant.title}
           </Typography>
+
+          <Tag>
+            <Typography size="label">Gang Gang</Typography>
+          </Tag>
+          <Tag intent="bio">
+            <Typography size="label">Gang Gang</Typography>
+          </Tag>
         </View>
       ))}
       <View style={styles.separator} />
