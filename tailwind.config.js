@@ -48,9 +48,6 @@ module.exports = {
       borderWidth: {
         2: "2px",
       },
-      boxShadow: {
-        "button-primary": "0px 24px 32px rgba(255, 215, 101, 0.2)",
-      },
       spacing: {
         96: "96px",
         72: "72px",
