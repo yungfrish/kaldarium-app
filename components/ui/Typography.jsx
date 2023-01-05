@@ -6,11 +6,44 @@ import { Text } from "react-native";
 const typographyStyles = cva("flex text-base font-normal tracking-wide", {
   variants: {
     size: {
-      copy: ["lh"],
-      button: ["font-bold"],
-      h1: ["w-full"],
-      h2: ["w-full"],
-      h3: ["w-full"],
+      copy: ["font-fraunces", "text-[16px]", "leading-[24px]", "tracking-wide"],
+      button: [
+        "font-skModernist",
+        "text-[16px]",
+        "leading-[36px]",
+        "tracking-normal",
+      ],
+      h1: [
+        "font-skModernist",
+        "text-[32px]",
+        "leading-[32px]",
+        "tracking-normal",
+      ],
+      h2: [
+        "font-frauncesSemi",
+        "text-[24px]",
+        "leading-[32px]",
+        "tracking-normal",
+      ],
+      h3: [
+        "font-skModernist",
+        "text-[20px]",
+        "leading-[28px]",
+        "tracking-wide",
+      ],
+      h4: [
+        "font-skModernist",
+        "text-[16px]",
+        "leading-[22px]",
+        "tracking-wider",
+      ],
+      label: [
+        "font-skModernist",
+        "text-[10px]",
+        "leading-[12px]",
+        "tracking-widest",
+        "uppercase",
+      ],
     },
   },
   defaultVariants: {
@@ -20,6 +53,6 @@ const typographyStyles = cva("flex text-base font-normal tracking-wide", {
 
 export const Typography = ({
   size = "copy",
-  text,
+  children,
   color = "text-green-medium",
-}) => <Text className={cx(typographyStyles({ size }), color)}>{text}</Text>;
+}) => <Text className={cx(typographyStyles({ size }), color)}>{children}</Text>;
