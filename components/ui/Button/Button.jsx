@@ -5,7 +5,7 @@ import { Pressable, View } from "react-native";
 import { Typography } from "@ui/Typography";
 
 export const buttonStyles = cva(
-  "flex flex-row items-center justify-center px-4 rounded-[20px] focus:outline-none h-14",
+  "flex flex-row items-center justify-center px-16 rounded-[20px] focus:outline-none h-14",
   {
     variants: {
       intent: {
@@ -27,7 +27,7 @@ export const buttonStyles = cva(
       size: {
         auto: ["w-auto"],
         full: ["w-full"],
-        small: ["h-11"],
+        small: ["h-11 px-[10] pr-[20] rounded-16"],
       },
     },
     defaultVariants: {
@@ -64,7 +64,9 @@ export const Button = ({ intent = "primary", size, ...props }) => {
           )}
           {props.text && (
             <View className={`${disabled || pressed ? "opacity-30" : ""}`}>
-              <Typography text={text} color={props.textColor} size="button" />
+              <Typography color={props.textColor} size="button">
+                {text}
+              </Typography>
             </View>
           )}
         </>

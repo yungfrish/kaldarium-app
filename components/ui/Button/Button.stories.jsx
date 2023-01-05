@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, ScrollView, SafeAreaView } from "react-native";
 import { storiesOf } from "@storybook/react-native";
-import { ButtonStory } from "./ButtonStories/ButtonStory";
+import { ButtonStory } from "./ButtonStory";
 
 storiesOf("Button", module)
   .add("Primary", () => (
