@@ -50,7 +50,6 @@ export default function useCachedResources() {
         // Load fonts
         await Font.loadAsync({
           ...FontAwesome.font,
-          "space-mono": require("../assets/fonts/SpaceMono-Regular.ttf"),
         });
 
         await getPlants();
