@@ -46,7 +46,7 @@ export default function useCachedResources() {
     );
 
     async function setData() {
-      await clearStore();
+      await clearStore(); // TODO: Remove this after development !!!
       const appData = await getStringValue("kaldariumAppLaunched");
       if (appData == null) {
         setFirstLaunch(true);
