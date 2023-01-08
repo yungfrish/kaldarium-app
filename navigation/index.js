@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { Platform, Pressable } from "react-native";
 
+import OnboardingScreen from "../screens/OnboardingScreen";
 import HomeScreen from "../screens/HomeScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import PlantsScreen from "../screens/PlantsScreen";
@@ -16,6 +17,8 @@ import ModalScreen from "../screens/ModalScreen";
 import StorybookScreen from "../screens/StorybookScreen";
 
 import LinkingConfiguration from "./LinkingConfiguration";
+
+import useCachedResources from "../hooks/useCachedResources";
 
 export default function Navigation() {
   return (
@@ -31,22 +34,26 @@ export default function Navigation() {
 const Stack = createNativeStackNavigator();
 
 function RootNavigator() {
+  const { firstLaunch } = useCachedResources();
+
+  console.log(firstLaunch);
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Root"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="NotFound"
-        component={NotFoundScreen}
-        options={{ title: "Oops!" }}
-      />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
-    </Stack.Navigator>
+    firstLaunch != null && (
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {firstLaunch && (
+          <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+        )}
+        <Stack.Screen name="Root" component={BottomTabNavigator} />
+        <Stack.Screen
+          name="NotFound"
+          component={NotFoundScreen}
+          options={{ title: "Oops!" }}
+        />
+        <Stack.Group screenOptions={{ presentation: "modal" }}>
+          <Stack.Screen name="Modal" component={ModalScreen} />
+        </Stack.Group>
+      </Stack.Navigator>
+    )
   );
 }
 
@@ -57,28 +64,15 @@ const BottomTab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
   return (
-    <BottomTab.Navigator initialRouteName="Home" screenOptions={{}}>
+    <BottomTab.Navigator
+      initialRouteName="Home"
+      screenOptions={{ headerShown: false }}
+    >
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
-        options={{
-          title: "Home",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-      <BottomTab.Screen
-        name="Plants"
-        component={PlantsScreen}
-        options={{
-          title: "Plants",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-      <BottomTab.Screen
-        name="Modal"
-        component={ModalScreen}
         options={({ navigation }) => ({
-          title: "Modal",
+          title: "Home",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
@@ -95,6 +89,14 @@ function BottomTabNavigator() {
             </Pressable>
           ),
         })}
+      />
+      <BottomTab.Screen
+        name="Plants"
+        component={PlantsScreen}
+        options={{
+          title: "Plants",
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
       />
 
       <BottomTab.Screen

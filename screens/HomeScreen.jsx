@@ -7,7 +7,7 @@ export default function HomeScreen({ navigation }) {
         This screen doesn't exist.
       </Text>
       <TouchableOpacity
-        onPress={() => navigation.replace("Plants")}
+        onPress={() => navigation.navigate("Plants")}
         style={styles.link}
       >
         <Text style={styles.linkText}>Go to plants screen!</Text>

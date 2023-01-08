@@ -1,14 +1,16 @@
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 
-export default function NotFoundScreen({ navigation }) {
+export default function OnboardingScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>This screen doesn't exist.</Text>
+      <Text className="font-skModernist" style={styles.title}>
+        ONBOARDING
+      </Text>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Root")}
+        onPress={() => navigation.navigate("Plants")}
         style={styles.link}
       >
-        <Text style={styles.linkText}>Go to home screen!</Text>
+        <Text style={styles.linkText}>Go to plants screen!</Text>
       </TouchableOpacity>
     </View>
   );

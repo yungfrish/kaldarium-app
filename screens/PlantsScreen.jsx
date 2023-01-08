@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { getObjectValue } from "../helper/AsyncStorage";
 import { KALDARIUM_SUPABASE_IMAGE_BUCKET_URL } from "@env";
-import { Typography } from "@ui/Typography";
+import { Typography } from "@ui/Typography/Typography";
 import { Tag } from "@ui/Tag/Tag";
 
 export default function TabOneScreen({ navigation }) {

@@ -2,7 +2,7 @@
 import React from "react";
 import { cva, cx } from "cva";
 import { Pressable, View } from "react-native";
-import { Typography } from "@ui/Typography";
+import { Typography } from "@ui/Typography/Typography";
 
 export const buttonStyles = cva(
   "flex flex-row items-center justify-center px-16 rounded-[20px] focus:outline-none h-14",

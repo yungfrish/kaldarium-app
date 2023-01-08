@@ -3,11 +3,12 @@ import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState, useRef } from "react";
 import { AppState } from "react-native";
-import { storeData } from "../helper/AsyncStorage";
+import { storeData, getStringValue, clearStore } from "../helper/AsyncStorage";
 import { supabase } from "../supabaseClient";
 
 export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+  const [firstLaunch, setFirstLaunch] = useState(null);
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
@@ -31,6 +32,7 @@ export default function useCachedResources() {
             .from("plants")
             .select("*");
 
+          console.log("Retrieve new data from db, might be outdated already!");
           if (error) {
             console.warn("Error retrieving data from db: ", error);
           } else {
@@ -42,6 +44,19 @@ export default function useCachedResources() {
         setAppStateVisible(appState.current);
       }
     );
+
+    async function setData() {
+      await clearStore();
+      const appData = await getStringValue("kaldariumAppLaunched");
+      if (appData == null) {
+        setFirstLaunch(true);
+        await storeData("kaldariumAppLaunched", "false");
+      } else {
+        setFirstLaunch(false);
+      }
+    }
+
+    setData();
 
     async function loadResourcesAndDataAsync() {
       try {
@@ -72,5 +87,5 @@ export default function useCachedResources() {
     };
   }, []);
 
-  return { isLoadingComplete, appStateVisible };
+  return { isLoadingComplete, firstLaunch, appStateVisible };
 }
