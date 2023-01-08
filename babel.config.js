@@ -9,6 +9,7 @@ module.exports = function (api) {
           alias: {
             "@ui": "./components/ui",
             "@svg": "./assets/svg",
+            "@storage": "./helper/AsyncStorage",
           },
           extensions: [".js", ".jsx", ".ts", ".tsx", ".svg"],
         },

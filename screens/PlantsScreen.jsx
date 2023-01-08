@@ -11,7 +11,6 @@ export default function TabOneScreen({ navigation }) {
   if (isLoading) {
     return <Text>Loading...</Text>;
   }
-  console.log(plants);
 
   return (
     <View style={styles.container}>

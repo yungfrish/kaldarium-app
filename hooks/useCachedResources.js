@@ -46,7 +46,6 @@ export default function useCachedResources() {
     );
 
     async function setData() {
-      await clearStore(); // TODO: Remove this after development !!!
       const appData = await getStringValue("kaldariumAppLaunched");
       if (appData == null) {
         setFirstLaunch(true);
@@ -54,6 +53,17 @@ export default function useCachedResources() {
       } else {
         setFirstLaunch(false);
       }
+
+      let date = new Date();
+
+      let workWeek = [];
+      let day = date.getDay();
+      let diff = date.getDate() - day + (day === 0 ? -6 : 1);
+      for (let i = 0; i < 7; i++) {
+        let day = new Date(date.setDate(diff + i));
+        workWeek.push(day);
+      }
+      console.log(workWeek);
     }
 
     setData();

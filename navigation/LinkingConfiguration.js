@@ -22,6 +22,11 @@ const linking = {
               Plants: "two",
             },
           },
+          Kalender: {
+            screens: {
+              CalendarScreen: "calendar",
+            },
+          },
           Storybook: {
             screens: {
               StorybookScreen: "storybook",
