@@ -9,32 +9,48 @@ export const tagStyles = cva(
   {
     variants: {
       intent: {
-        plant: ["bg-tomate"],
         bio: ["bg-green/10"],
+        gurke: ["bg-gurke"],
+        karotte: ["bg-karotte"],
+        kartoffel: ["bg-kartoffel"],
+        tomate: ["bg-tomate"],
       },
       size: {
         auto: ["w-auto"],
         full: ["w-full"],
         small: ["h-5"],
       },
+      plantName: {},
     },
     defaultVariants: {
-      intent: "plant",
+      intent: "bio",
     },
   }
 );
 
-export const Tag = ({ children, intent, ...props }) => {
+export const Tag = ({ children, intent, plantName, ...props }) => {
   const { text } = props;
   let textColor = "text-green-medium";
-  let textLabel = "";
+  let textLabel = "Bio";
 
   if (intent == "bio") {
     textLabel = "Bio";
   }
 
-  if (intent == "plant") {
-    textLabel = "Gang Gang";
+  if (intent == "gurke") {
+    textLabel = "Gurke";
+  }
+
+  if (intent == "karotte") {
+    textLabel = "Karotte";
+  }
+
+  if (intent == "kartoffel") {
+    textLabel = "Kartoffel";
+  }
+
+  if (intent == "tomate") {
+    textLabel = "Tomate";
   }
 
   return (

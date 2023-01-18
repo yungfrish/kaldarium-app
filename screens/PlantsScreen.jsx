@@ -32,10 +32,15 @@ export default function TabOneScreen({ navigation }) {
       ))}
       <View style={styles.separator} />
 
-      <View className="gap-8">
-        <Tag intent="bio"></Tag>
-        <Tag intent="plant"></Tag>
-        <ListItem intent="default"></ListItem>
+      <View className="gap-y-8 bg-yellow-light-100 w-full px-32 py-32 items-start">
+        <Tag></Tag>
+        <Tag intent="gurke"></Tag>
+        <Tag intent="karotte"></Tag>
+        <Tag intent="kartoffel"></Tag>
+        <Tag intent="tomate"></Tag>
+        <View className="flex flex-col w-full">
+          <ListItem intent="default"></ListItem>
+        </View>
         <TagStatus intent="error"></TagStatus>
         <TagStatus intent="green"></TagStatus>
         <TagStatus intent="yellow"></TagStatus>
