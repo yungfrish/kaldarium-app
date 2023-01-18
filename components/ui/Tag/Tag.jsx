@@ -2,9 +2,10 @@
 import React from "react";
 import { cva } from "cva";
 import { View } from "react-native";
+import { Typography } from "@ui/Typography/Typography";
 
 export const tagStyles = cva(
-  "flex flex-row items-center justify-center px-3 rounded-full focus:outline-none h-6 text-label text-green-medium",
+  "flex flex-row items-center justify-center px-3 rounded-full focus:outline-none h-6",
   {
     variants: {
       intent: {
