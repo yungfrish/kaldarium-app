@@ -5,6 +5,7 @@ import { KALDARIUM_SUPABASE_IMAGE_BUCKET_URL } from "@env";
 import { Typography } from "@ui/Typography/Typography";
 import { Tag } from "@ui/Tag/Tag";
 import { TagStatus } from "@ui/Tag/Tag-Status";
+import { ListItem } from "@ui/List/List-Item";
 
 export default function TabOneScreen({ navigation }) {
   const { data: plants, isLoading } = getObjectValue("plants");
@@ -27,19 +28,18 @@ export default function TabOneScreen({ navigation }) {
           <Typography size="copy" key={plant.id}>
             {plant.title}
           </Typography>
-
-          <Tag intent="bio">
-            <Typography size="label">Bio</Typography>
-          </Tag>
-          <Tag>
-            <Typography size="label">Gang Gang</Typography>
-          </Tag>
-          <TagStatus intent="error"></TagStatus>
-          <TagStatus intent="green"></TagStatus>
-          <TagStatus intent="yellow"></TagStatus>
         </View>
       ))}
       <View style={styles.separator} />
+
+      <View className="gap-8">
+        <Tag intent="bio"></Tag>
+        <Tag intent="plant"></Tag>
+        <ListItem intent="default"></ListItem>
+        <TagStatus intent="error"></TagStatus>
+        <TagStatus intent="green"></TagStatus>
+        <TagStatus intent="yellow"></TagStatus>
+      </View>
     </View>
   );
 }

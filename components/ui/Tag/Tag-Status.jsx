@@ -1,4 +1,4 @@
-// tag.tsx
+// tag-status.tsx
 import React from "react";
 import { cva } from "cva";
 import { View } from "react-native";

@@ -24,6 +24,24 @@ export const tagStyles = cva(
   }
 );
 
-export const Tag = ({ children, intent }) => (
-  <View className={tagStyles({ intent })}>{children}</View>
-);
+export const Tag = ({ children, intent, ...props }) => {
+  const { text } = props;
+  let textColor = "text-green-medium";
+  let textLabel = "";
+
+  if (intent == "bio") {
+    textLabel = "Bio";
+  }
+
+  if (intent == "plant") {
+    textLabel = "Gang Gang";
+  }
+
+  return (
+    <View className={tagStyles({ intent })} {...props}>
+      <Typography size="label" color={textColor}>
+        {textLabel}
+      </Typography>
+    </View>
+  );
+};
