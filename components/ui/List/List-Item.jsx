@@ -3,6 +3,7 @@ import React from "react";
 import { cva } from "cva";
 import { View } from "react-native";
 import { Typography } from "@ui/Typography/Typography";
+import { Tag } from "@ui/Tag/Tag";
 
 export const itemStyles = cva(
   "flex flex-col items-left justify-center p-6 rounded-20 focus:outline-none border-2 border-yellow-light-300",
@@ -26,35 +27,33 @@ export const itemStyles = cva(
 );
 
 export const ListItem = ({ children, intent, ...props }) => {
-  const { text } = props;
+  const { textTitle, textDesc } = props;
   let textColor = "text-green-medium";
-  let title = "";
-  let desc = "";
 
   if (intent == "default") {
-    title = "Name goes here";
-    desc = "Description goes here";
   }
 
   if (intent == "event") {
-    title = "Name goes here";
-    desc = "Description goes here";
   }
 
   if (intent == "info") {
-    title = "Name goes here";
-    desc = "Description goes here";
   }
 
   return (
     <View className={itemStyles({ intent })} {...props}>
-      <Typography size="h3" color={textColor}>
-        Title goes here
-      </Typography>
-
-      <Typography size="copy" color={textColor}>
-        {desc}
-      </Typography>
+      <View className="flex items-center w-full">
+        <View className="flex flex-row items-center justify-start space-x-2 w-full">
+          <Typography size="h3" color={textColor}>
+            {textTitle}
+          </Typography>
+          <Tag></Tag>
+        </View>
+        <View className="w-full">
+          <Typography size="copy" color={textColor}>
+            {textDesc}
+          </Typography>
+        </View>
+      </View>
     </View>
   );
 };

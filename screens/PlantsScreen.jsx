@@ -39,7 +39,11 @@ export default function TabOneScreen({ navigation }) {
         <Tag intent="kartoffel"></Tag>
         <Tag intent="tomate"></Tag>
         <View className="flex flex-col w-full">
-          <ListItem intent="default"></ListItem>
+          <ListItem
+            intent="default"
+            textTitle="Karotte"
+            textDesc="Lorem ipsum dolor sit amet."
+          ></ListItem>
         </View>
         <TagStatus intent="error"></TagStatus>
         <TagStatus intent="green"></TagStatus>
