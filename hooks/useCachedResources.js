@@ -63,7 +63,6 @@ export default function useCachedResources() {
         let day = new Date(date.setDate(diff + i));
         workWeek.push(day);
       }
-      console.log(workWeek);
     }
 
     setData();

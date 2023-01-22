@@ -14,22 +14,27 @@ const linking = {
         screens: {
           HomeScreen: {
             screens: {
-              Home: "one",
+              Home: "home",
             },
           },
           PlantsScreen: {
             screens: {
-              Plants: "two",
+              Plants: "plants",
             },
           },
-          Kalender: {
+          PlaygroundScreen: {
             screens: {
-              CalendarScreen: "calendar",
+              Playground: "playground",
             },
           },
-          Storybook: {
+          CalendarScreen: {
             screens: {
-              StorybookScreen: "storybook",
+              Calendar: "calendar",
+            },
+          },
+          StorybookScreen: {
+            screens: {
+              Storybook: "storybook",
             },
           },
         },

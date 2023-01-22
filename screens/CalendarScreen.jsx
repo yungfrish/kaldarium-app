@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import { Calendar } from "../components/ui/Calendar/Calendar";
 
-export default function HomeScreen({ navigation }) {
+export default function CalendarScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Calendar />

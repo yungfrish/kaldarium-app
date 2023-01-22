@@ -15,6 +15,7 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import PlantsScreen from "../screens/PlantsScreen";
 import ModalScreen from "../screens/ModalScreen";
 import CalendarScreen from "../screens/CalendarScreen";
+import PlaygroundScreen from "../screens/PlaygroundScreen";
 import StorybookScreen from "../screens/StorybookScreen";
 
 import LinkingConfiguration from "./LinkingConfiguration";
@@ -99,12 +100,20 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
+      <BottomTab.Screen
+        name="Playground"
+        component={PlaygroundScreen}
+        options={{
+          title: "Playground",
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
 
       <BottomTab.Screen
-        name="Kalender"
+        name="Calendar"
         component={CalendarScreen}
         options={{
-          title: "Kalender",
+          title: "Calendar",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
