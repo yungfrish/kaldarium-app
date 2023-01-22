@@ -49,6 +49,9 @@
     "@storybook/react-native": "^5.3.27",
     "@storybook/react-native-server": "^5.3.23",
     "babel-loader": "^8.3.0",
+    "eslint": "^8.32.0",
+    "eslint-config-universe": "^11.1.1",
+    "prettier": "^2.8.3",
     "react-dom": "^18.1.0",
     "react-native-dotenv": "^3.4.2",
     "react-native-svg-transformer": "^1.0.0",
@@ -56,5 +59,8 @@
     "supabase": "^1.15.1",
     "tailwindcss": "^3.2.4"
   },
-  "private": true
+  "private": true,
+  "eslintConfig": {
+    "extends": "universe/native"
+  }
 }

@@ -1,6 +1,6 @@
 // button.tsx
-import React from "react";
 import { cva, cx } from "cva";
+import React from "react";
 import { Text } from "react-native";
 
 const typographyStyles = cva("flex text-base font-normal tracking-wide", {

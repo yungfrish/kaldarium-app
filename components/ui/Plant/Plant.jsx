@@ -1,7 +1,7 @@
+import { KALDARIUM_SUPABASE_IMAGE_BUCKET_URL } from "@env";
+import { Typography } from "@ui/Typography/Typography";
 import React from "react";
 import { View, Image } from "react-native";
-import { Typography } from "@ui/Typography/Typography";
-import { KALDARIUM_SUPABASE_IMAGE_BUCKET_URL } from "@env";
 
 export const Plant = ({ plant }) => {
   return (

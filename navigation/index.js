@@ -1,26 +1,20 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
-} from "@react-navigation/native";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { Platform, Pressable } from "react-native";
-
-import OnboardingScreen from "../screens/OnboardingScreen";
-import HomeScreen from "../screens/HomeScreen";
-import NotFoundScreen from "../screens/NotFoundScreen";
-import PlantsScreen from "../screens/PlantsScreen";
-import ModalScreen from "../screens/ModalScreen";
-import CalendarScreen from "../screens/CalendarScreen";
-import PlaygroundScreen from "../screens/PlaygroundScreen";
-import StorybookScreen from "../screens/StorybookScreen";
+import { Pressable } from "react-native";
 
 import LinkingConfiguration from "./LinkingConfiguration";
-
 import useCachedResources from "../hooks/useCachedResources";
+import CalendarScreen from "../screens/CalendarScreen";
+import HomeScreen from "../screens/HomeScreen";
+import ModalScreen from "../screens/ModalScreen";
+import NotFoundScreen from "../screens/NotFoundScreen";
+import OnboardingScreen from "../screens/OnboardingScreen";
+import PlantsScreen from "../screens/PlantsScreen";
+import PlaygroundScreen from "../screens/PlaygroundScreen";
+import StorybookScreen from "../screens/StorybookScreen";
 
 export default function Navigation() {
   return (

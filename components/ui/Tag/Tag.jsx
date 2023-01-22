@@ -1,8 +1,8 @@
 // tag.tsx
-import React from "react";
-import { cva } from "cva";
-import { View } from "react-native";
 import { Typography } from "@ui/Typography/Typography";
+import { cva } from "cva";
+import React from "react";
+import { View } from "react-native";
 
 const tagStyles = cva(
   "flex flex-row items-center justify-center px-3 rounded-full focus:outline-none h-6",
@@ -29,27 +29,27 @@ const tagStyles = cva(
 );
 
 export const Tag = ({ children, intent, plantName, ...props }) => {
-  const { text } = props;
-  let textColor = "text-green-medium";
+  // const { text } = props;
+  const textColor = "text-green-medium";
   let textLabel = "Bio";
 
-  if (intent == "bio") {
+  if (intent === "bio") {
     textLabel = "Bio";
   }
 
-  if (intent == "gurke") {
+  if (intent === "gurke") {
     textLabel = "Gurke";
   }
 
-  if (intent == "karotte") {
+  if (intent === "karotte") {
     textLabel = "Karotte";
   }
 
-  if (intent == "kartoffel") {
+  if (intent === "kartoffel") {
     textLabel = "Kartoffel";
   }
 
-  if (intent == "tomate") {
+  if (intent === "tomate") {
     textLabel = "Tomate";
   }
 

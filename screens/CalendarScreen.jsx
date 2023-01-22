@@ -1,4 +1,5 @@
-import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+
 import { Calendar } from "../components/ui/Calendar/Calendar";
 
 export default function CalendarScreen({ navigation }) {

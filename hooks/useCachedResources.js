@@ -3,7 +3,8 @@ import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState, useRef } from "react";
 import { AppState } from "react-native";
-import { storeData, getStringValue, clearStore } from "../helper/AsyncStorage";
+
+import { storeData, getStringValue } from "../helper/AsyncStorage";
 import { supabase } from "../supabaseClient";
 
 export default function useCachedResources() {
@@ -54,13 +55,13 @@ export default function useCachedResources() {
         setFirstLaunch(false);
       }
 
-      let date = new Date();
+      const date = new Date();
 
-      let workWeek = [];
-      let day = date.getDay();
-      let diff = date.getDate() - day + (day === 0 ? -6 : 1);
+      const workWeek = [];
+      const day = date.getDay();
+      const diff = date.getDate() - day + (day === 0 ? -6 : 1);
       for (let i = 0; i < 7; i++) {
-        let day = new Date(date.setDate(diff + i));
+        const day = new Date(date.setDate(diff + i));
         workWeek.push(day);
       }
     }

@@ -1,7 +1,7 @@
-import React from "react";
-import { cva } from "cva";
-import { View } from "react-native";
 import { Typography } from "@ui/Typography/Typography";
+import { cva } from "cva";
+import React from "react";
+import { View } from "react-native";
 
 const tagStyles = cva(
   "flex flex-row items-center justify-center pr-3 pl-1 rounded-full focus:outline-none h-7",

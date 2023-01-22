@@ -1,11 +1,12 @@
-import * as React from "react";
-import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
-import { getObjectValue } from "../helper/AsyncStorage";
 import { KALDARIUM_SUPABASE_IMAGE_BUCKET_URL } from "@env";
-import { Typography } from "@ui/Typography/Typography";
+import { ListItem } from "@ui/ListItem/ListItem";
 import { Tag } from "@ui/Tag/Tag";
 import { TagStatus } from "@ui/TagStatus/TagStatus";
-import { ListItem } from "@ui/ListItem/ListItem";
+import { Typography } from "@ui/Typography/Typography";
+import * as React from "react";
+import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
+
+import { getObjectValue } from "../helper/AsyncStorage";
 
 export default function PlaygroundScreen({ navigation }) {
   const { data: plants, isLoading } = getObjectValue("plants");
@@ -43,17 +44,17 @@ export default function PlaygroundScreen({ navigation }) {
         <View style={styles.separator} />
 
         <View className="gap-y-8 bg-yellow-light-100 w-full px-32 py-32 items-start">
-          <Tag></Tag>
-          <Tag intent="gurke"></Tag>
-          <Tag intent="karotte"></Tag>
-          <Tag intent="kartoffel"></Tag>
-          <Tag intent="tomate"></Tag>
+          <Tag />
+          <Tag intent="gurke" />
+          <Tag intent="karotte" />
+          <Tag intent="kartoffel" />
+          <Tag intent="tomate" />
           <View className="flex flex-col w-full">
             <ListItem
               intent="default"
               textTitle="Karotte"
               textDesc="Lorem ipsum dolor sit amet."
-            ></ListItem>
+            />
           </View>
           <TagStatus intent="danger" text="Gefahr" />
           <TagStatus intent="fine" text="Alles gut" />

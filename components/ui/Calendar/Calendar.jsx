@@ -1,9 +1,8 @@
 // Get current work week out of the 52 weeks of the year based on the current date
 
-import React from "react";
-import { Typography } from "@ui/Typography/Typography";
-import { View, SafeAreaView, FlatList, Text } from "react-native";
 import { getObjectValue } from "@storage";
+import React from "react";
+import { View, Text } from "react-native";
 import CalendarStrip from "react-native-calendar-strip";
 
 export const Calendar = () => {
@@ -13,6 +12,7 @@ export const Calendar = () => {
     return <Text>Loading...</Text>;
   }
 
+  console.log(plants);
   // const currentDate = new Date();
   // const startDate = new Date(currentDate.getFullYear(), 0, 1);
   // const days = Math.floor((currentDate - startDate) / (24 * 60 * 60 * 1000));

@@ -1,7 +1,8 @@
-import * as React from "react";
-import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
-import { getObjectValue } from "../helper/AsyncStorage";
 import { Plant } from "@ui/Plant/Plant";
+import * as React from "react";
+import { Text, View, ImageBackground } from "react-native";
+
+import { getObjectValue } from "../helper/AsyncStorage";
 
 export default function PlantsScreen({ navigation }) {
   const { data: plants, isLoading } = getObjectValue("plants");
@@ -31,17 +32,3 @@ export default function PlantsScreen({ navigation }) {
     </ImageBackground>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-    backgroundColor: "#eee",
-  },
-});
