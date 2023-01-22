@@ -4,8 +4,8 @@ import { getObjectValue } from "../helper/AsyncStorage";
 import { KALDARIUM_SUPABASE_IMAGE_BUCKET_URL } from "@env";
 import { Typography } from "@ui/Typography/Typography";
 import { Tag } from "@ui/Tag/Tag";
-import { TagStatus } from "@ui/Tag/Tag-Status";
-import { ListItem } from "@ui/List/List-Item";
+import { TagStatus } from "@ui/Tag/TagStatus";
+import { ListItem } from "@ui/List/ListItem";
 
 export default function TabOneScreen({ navigation }) {
   const { data: plants, isLoading } = getObjectValue("plants");
@@ -45,9 +45,9 @@ export default function TabOneScreen({ navigation }) {
             textDesc="Lorem ipsum dolor sit amet."
           ></ListItem>
         </View>
-        <TagStatus intent="error"></TagStatus>
-        <TagStatus intent="green"></TagStatus>
-        <TagStatus intent="yellow"></TagStatus>
+        <TagStatus intent="danger" text="Gefahr" />
+        <TagStatus intent="fine" text="Alles gut" />
+        <TagStatus intent="warning" text="Achtung" />
       </View>
     </View>
   );

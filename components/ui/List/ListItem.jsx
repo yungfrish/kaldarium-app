@@ -5,7 +5,7 @@ import { View } from "react-native";
 import { Typography } from "@ui/Typography/Typography";
 import { Tag } from "@ui/Tag/Tag";
 
-export const itemStyles = cva(
+const itemStyles = cva(
   "flex flex-col items-left justify-center p-6 rounded-20 focus:outline-none border-2 border-yellow-light-300",
   {
     variants: {
