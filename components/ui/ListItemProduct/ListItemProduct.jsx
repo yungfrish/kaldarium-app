@@ -20,8 +20,8 @@ const itemStyles = cva(
 
 export const ListItemProduct = ({
   navigation,
-  textTitle,
-  textDesc,
+  title,
+  text,
   link = "",
   isBio = false,
   ...props
@@ -40,13 +40,13 @@ export const ListItemProduct = ({
               <View className="max-w-[75%]">
                 {/* Rework Max Width Percentage */}
                 <Typography size="h3" color={textColor}>
-                  {textTitle}
+                  {title}
                 </Typography>
               </View>
               {isBio && <Tag intent="bio" text="Bio" />}
             </View>
             <Typography size="copy" color={textColor}>
-              {textDesc}
+              {text}
             </Typography>
           </View>
           <ChevronForward color="yellow-dark" className="flex-none" />
@@ -55,12 +55,12 @@ export const ListItemProduct = ({
         <View className="flex flex-col items-left w-full">
           <View className="flex flex-row items-center justify-start space-x-2">
             <Typography size="h3" color={textColor}>
-              {textTitle}
+              {title}
             </Typography>
             {isBio && <Tag intent="bio" text="Bio" />}
           </View>
           <Typography size="copy" color={textColor}>
-            {textDesc}
+            {text}
           </Typography>
         </View>
       )}

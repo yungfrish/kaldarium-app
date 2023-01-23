@@ -1,15 +1,14 @@
-import { KALDARIUM_SUPABASE_IMAGE_BUCKET_URL } from "@env";
 import { ListItemProduct } from "@ui/ListItemProduct/ListItemProduct";
 import { Tag } from "@ui/Tag/Tag";
 import { TagStatus } from "@ui/TagStatus/TagStatus";
-import { Typography } from "@ui/Typography/Typography";
 import * as React from "react";
-import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
+import { Text, View, ImageBackground } from "react-native";
 
 import { getObjectValue } from "../helper/AsyncStorage";
 
 export default function PlaygroundScreen({ navigation }) {
-  const { data: plants, isLoading } = getObjectValue("plants");
+  // const { data: plants, isLoading } = getObjectValue("plants");
+  const { isLoading } = getObjectValue("plants");
 
   if (isLoading) {
     return <Text>Loading...</Text>;
@@ -37,15 +36,15 @@ export default function PlaygroundScreen({ navigation }) {
         <View className="flex flex-col w-full gap-y-8">
           <ListItemProduct
             navigation={navigation}
-            textTitle="Product All Incl."
-            textDesc="Lorem ipsum dolor sit amet, consetetur sadipscing elitr."
-            isBio={true}
+            title="Product All Incl."
+            text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr."
+            isBio
             link="Gang Gang"
           />
           <ListItemProduct
             navigation={navigation}
-            textTitle="No Link, No Zelda"
-            textDesc="Lorem ipsum dolor sit amet, consetetur sadipscing elitr."
+            title="No Link, No Zelda"
+            text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr."
             isBio={false}
           />
         </View>
@@ -56,17 +55,3 @@ export default function PlaygroundScreen({ navigation }) {
     </ImageBackground>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-    backgroundColor: "#eee",
-  },
-});
