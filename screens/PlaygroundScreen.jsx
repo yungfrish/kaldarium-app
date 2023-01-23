@@ -51,6 +51,7 @@ export default function PlaygroundScreen({ navigation }) {
           <Tag intent="tomate" />
           <View className="flex flex-col w-full">
             <ListItem
+              navigation={navigation}
               intent="default"
               textTitle="Karotte"
               textDesc="Lorem ipsum dolor sit amet."

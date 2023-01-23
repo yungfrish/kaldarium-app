@@ -1,6 +1,6 @@
-import React from "react";
-import { Button } from "@ui/Button/Button";
 import ChevronBackward from "@svg/chevron_backward.svg";
+import { Button } from "@ui/Button/Button";
+import React from "react";
 import { View } from "react-native";
 
 export const ButtonStory = ({ intent, textColor }) => {
@@ -10,14 +10,14 @@ export const ButtonStory = ({ intent, textColor }) => {
         intent={intent}
         textColor={textColor}
         size="full"
-        text={"Button Label"}
+        text="Button Label"
       />
 
       <Button
         intent={intent}
         textColor={textColor}
         size="full"
-        text={"Button Label"}
+        text="Button Label"
         disabled
       />
 
@@ -25,7 +25,7 @@ export const ButtonStory = ({ intent, textColor }) => {
         intent={intent}
         textColor={textColor}
         size="full"
-        text={"Button Label"}
+        text="Button Label"
         svg={
           <ChevronBackward
             color={intent === "secondaryDark" ? "white" : "#165556"}
@@ -37,7 +37,7 @@ export const ButtonStory = ({ intent, textColor }) => {
         intent={intent}
         textColor={textColor}
         size="full"
-        text={"Button Label"}
+        text="Button Label"
         svg={
           <ChevronBackward
             color={intent === "secondaryDark" ? "white" : "#165556"}
@@ -96,7 +96,7 @@ export const ButtonStory = ({ intent, textColor }) => {
         intent={intent}
         textColor={textColor}
         size="small"
-        text={"Button Label"}
+        text="Button Label"
         svg={
           <ChevronBackward
             color={intent === "secondaryDark" ? "white" : "#165556"}
@@ -108,7 +108,7 @@ export const ButtonStory = ({ intent, textColor }) => {
         intent={intent}
         textColor={textColor}
         size="small"
-        text={"Button Label"}
+        text="Button Label"
         svg={
           <ChevronBackward
             color={intent === "secondaryDark" ? "white" : "#165556"}
