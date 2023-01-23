@@ -27,23 +27,26 @@ export default function PlaygroundScreen({ navigation }) {
       }}
     >
       <View className="gap-y-8 bg-yellow-light-100 w-full px-32 py-32 items-start">
-        <Tag />
-        <Tag intent="gurke" />
-        <Tag intent="karotte" />
-        <Tag intent="kartoffel" />
-        <Tag intent="tomate" />
+        <View className="flex flex-row items-start justify-start gap-8 w-full">
+          <Tag />
+          <Tag intent="gurke" />
+          <Tag intent="karotte" />
+          <Tag intent="kartoffel" />
+          <Tag intent="tomate" />
+        </View>
         <View className="flex flex-col w-full gap-y-8">
           <ListItemProduct
             navigation={navigation}
-            textTitle="Karotte"
-            textDesc="Lorem ipsum dolor sit amet."
-            isBio={false}
+            textTitle="Product All Incl."
+            textDesc="Lorem ipsum dolor sit amet, consetetur sadipscing elitr."
+            isBio={true}
+            link="Gang Gang"
           />
           <ListItemProduct
             navigation={navigation}
-            textTitle="Karotte"
-            textDesc="Lorem ipsum dolor sit amet."
-            isBio={true}
+            textTitle="No Link, No Zelda"
+            textDesc="Lorem ipsum dolor sit amet, consetetur sadipscing elitr."
+            isBio={false}
           />
         </View>
         <TagStatus intent="danger" text="Gefahr" />
