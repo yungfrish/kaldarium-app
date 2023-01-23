@@ -1,4 +1,4 @@
-// list-item.tsx
+// list-item-product.tsx
 import { Tag } from "@ui/Tag/Tag";
 import { Typography } from "@ui/Typography/Typography";
 import { cva } from "cva";
@@ -9,26 +9,17 @@ const itemStyles = cva(
   "flex flex-col items-left justify-center p-6 rounded-20 focus:outline-none border-2 border-yellow-light-300",
   {
     variants: {
-      intent: {
-        default: ["bg-yellow-light-100"],
-        event: ["bg-yellow-light-100"],
-        info: ["bg-yellow-light-100"],
-      },
       size: {
         auto: ["w-auto"],
         full: ["w-full"],
         small: ["h-5"],
       },
     },
-    defaultVariants: {
-      intent: "default",
-    },
   }
 );
 
-export const ListItem = ({
+export const ListItemProduct = ({
   navigation,
-  intent,
   textTitle,
   textDesc,
   link = "",
@@ -36,28 +27,18 @@ export const ListItem = ({
 }) => {
   const textColor = "text-green-medium";
 
-  if (intent === "default") {
-  }
-
-  if (intent === "event") {
-  }
-
-  if (intent === "info") {
-  }
-
   return (
-    <View className={itemStyles({ intent })}>
+    <View className={itemStyles({})}>
       {link !== "" ? (
         <TouchableOpacity
           onPress={() => navigation.navigate("Plants")}
-          className="flex items-center w-full"
+          className="flex items-left w-full"
         >
           <View className="flex flex-row items-center justify-start space-x-2 w-full">
             <Typography size="h3" color={textColor}>
               {textTitle}
             </Typography>
-            {isBio && <Tag intent="info" text="Bio" />}
-            <Tag />
+            {isBio && <Tag intent="bio" text="Bio" />}
           </View>
           <View className="w-full">
             <Typography size="copy" color={textColor}>
@@ -66,13 +47,12 @@ export const ListItem = ({
           </View>
         </TouchableOpacity>
       ) : (
-        <View className="flex items-center w-full">
+        <View className="flex items-left w-full">
           <View className="flex flex-row items-center justify-start space-x-2 w-full">
             <Typography size="h3" color={textColor}>
               {textTitle}
             </Typography>
-            {isBio && <Tag intent="info" text="Bio" />}
-            <Tag />
+            {isBio && <Tag intent="bio" text="Bio" />}
           </View>
           <View className="w-full">
             <Typography size="copy" color={textColor}>

@@ -1,5 +1,5 @@
 import { KALDARIUM_SUPABASE_IMAGE_BUCKET_URL } from "@env";
-import { ListItem } from "@ui/ListItem/ListItem";
+import { ListItemProduct } from "@ui/ListItemProduct/ListItemProduct";
 import { Tag } from "@ui/Tag/Tag";
 import { TagStatus } from "@ui/TagStatus/TagStatus";
 import { Typography } from "@ui/Typography/Typography";
@@ -26,41 +26,29 @@ export default function PlaygroundScreen({ navigation }) {
         width: "100%",
       }}
     >
-      <View style={styles.container}>
-        {plants.map((plant) => (
-          <View key={plant.id}>
-            <Image
-              source={{
-                uri: `${KALDARIUM_SUPABASE_IMAGE_BUCKET_URL}/plants/${plant.title}.png`,
-              }}
-              style={{ width: 100, height: 100 }}
-            />
-
-            <Typography size="copy" key={plant.id}>
-              {plant.title}
-            </Typography>
-          </View>
-        ))}
-        <View style={styles.separator} />
-
-        <View className="gap-y-8 bg-yellow-light-100 w-full px-32 py-32 items-start">
-          <Tag />
-          <Tag intent="gurke" />
-          <Tag intent="karotte" />
-          <Tag intent="kartoffel" />
-          <Tag intent="tomate" />
-          <View className="flex flex-col w-full">
-            <ListItem
-              navigation={navigation}
-              intent="default"
-              textTitle="Karotte"
-              textDesc="Lorem ipsum dolor sit amet."
-            />
-          </View>
-          <TagStatus intent="danger" text="Gefahr" />
-          <TagStatus intent="fine" text="Alles gut" />
-          <TagStatus intent="warning" text="Achtung" />
+      <View className="gap-y-8 bg-yellow-light-100 w-full px-32 py-32 items-start">
+        <Tag />
+        <Tag intent="gurke" />
+        <Tag intent="karotte" />
+        <Tag intent="kartoffel" />
+        <Tag intent="tomate" />
+        <View className="flex flex-col w-full">
+          <ListItemProduct
+            navigation={navigation}
+            textTitle="Karotte"
+            textDesc="Lorem ipsum dolor sit amet."
+            isBio={false}
+          />
+          <ListItemProduct
+            navigation={navigation}
+            textTitle="Karotte"
+            textDesc="Lorem ipsum dolor sit amet."
+            isBio={true}
+          />
         </View>
+        <TagStatus intent="danger" text="Gefahr" />
+        <TagStatus intent="fine" text="Alles gut" />
+        <TagStatus intent="warning" text="Achtung" />
       </View>
     </ImageBackground>
   );
