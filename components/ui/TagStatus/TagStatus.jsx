@@ -15,7 +15,6 @@ const tagStyles = cva(
       size: {
         auto: ["w-auto"],
         full: ["w-full"],
-        small: ["h-5"],
       },
     },
     defaultVariants: {
@@ -24,7 +23,7 @@ const tagStyles = cva(
   }
 );
 
-export const TagStatus = ({ intent, text }) => {
+export const TagStatus = ({ intent, text, ...props }) => {
   let emoji = "";
 
   switch (intent) {
@@ -46,7 +45,7 @@ export const TagStatus = ({ intent, text }) => {
   }
 
   return (
-    <View className={tagStyles({ intent })}>
+    <View className={tagStyles({ intent })} {...props}>
       <View className="pr-2">
         <Typography size="h3" color="text-yellow-light-100">
           {emoji}

@@ -18,7 +18,6 @@ const tagStyles = cva(
       size: {
         auto: ["w-auto"],
         full: ["w-full"],
-        small: ["h-5"],
       },
       plantName: {},
     },
@@ -28,7 +27,7 @@ const tagStyles = cva(
   }
 );
 
-export const Tag = ({ children, intent, plantName, ...props }) => {
+export const Tag = ({ intent, plantName, ...props }) => {
   // const { text } = props;
   const textColor = "text-green-medium";
   let textLabel = "Bio";

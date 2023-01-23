@@ -32,7 +32,7 @@ export default function PlaygroundScreen({ navigation }) {
         <Tag intent="karotte" />
         <Tag intent="kartoffel" />
         <Tag intent="tomate" />
-        <View className="flex flex-col w-full">
+        <View className="flex flex-col w-full gap-y-8">
           <ListItemProduct
             navigation={navigation}
             textTitle="Karotte"

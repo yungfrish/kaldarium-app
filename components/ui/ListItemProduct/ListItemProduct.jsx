@@ -6,13 +6,12 @@ import React from "react";
 import { View, TouchableOpacity } from "react-native";
 
 const itemStyles = cva(
-  "flex flex-col items-left justify-center p-6 rounded-20 focus:outline-none border-2 border-yellow-light-300",
+  "flex flex-col items-left justify-center p-6 rounded-20 focus:outline-none border-2 border-yellow-light-300 h-auto",
   {
     variants: {
       size: {
         auto: ["w-auto"],
         full: ["w-full"],
-        small: ["h-5"],
       },
     },
   }
@@ -24,11 +23,12 @@ export const ListItemProduct = ({
   textDesc,
   link = "",
   isBio = false,
+  ...props
 }) => {
   const textColor = "text-green-medium";
 
   return (
-    <View className={itemStyles({})}>
+    <View className={itemStyles({})} {...props}>
       {link !== "" ? (
         <TouchableOpacity
           onPress={() => navigation.navigate("Plants")}
