@@ -1,10 +1,9 @@
+import { Calendar } from "@ui/Calendar/Calendar";
 import { StyleSheet, View } from "react-native";
-
-import { Calendar } from "../components/ui/Calendar/Calendar";
 
 export default function CalendarScreen({ navigation }) {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} className="bg-yellow-light-100">
       <Calendar />
     </View>
   );
