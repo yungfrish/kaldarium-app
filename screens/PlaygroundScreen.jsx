@@ -54,6 +54,8 @@ export default function PlaygroundScreen({ navigation }) {
             month="Jan"
             hasTags={true}
           />
+          <ListItemInfo intent="water" text="Täglich 2x gießen" />
+          <ListItemInfo intent="light" text="In den Schatten stellen" />
         </View>
       </View>
     </ImageBackground>
