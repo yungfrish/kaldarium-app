@@ -1,4 +1,4 @@
-// list-item-product.tsx
+// list-item-info.tsx
 import ChevronForward from "@svg/chevron_forward.svg";
 import { Tag } from "@ui/Tag/Tag";
 import { Typography } from "@ui/Typography/Typography";
@@ -18,7 +18,7 @@ const itemStyles = cva(
   }
 );
 
-export const ListItemProduct = ({
+export const ListItemInfo = ({
   navigation,
   title,
   text,
@@ -36,20 +36,18 @@ export const ListItemProduct = ({
           className="flex flex-row items-center justify-start w-full space-x-2"
         >
           <View className="flex flex-col grow">
-            <View className="max-w-[85%]">
+            <View className="flex flex-row items-center justify-start space-x-2 max-w-[80%]">
               {/* Rework Max Width Percentage */}
-              <View className="flex flex-row items-center justify-start space-x-2">
-                <Typography size="h3" color={textColor}>
-                  {title}
-                </Typography>
-                {isBio && <Tag intent="bio" text="Bio" />}
-              </View>
-              <Typography size="copy" color={textColor}>
-                {text}
+              <Typography size="h3" color={textColor}>
+                {title}
               </Typography>
+              {isBio && <Tag intent="bio" text="Bio" />}
             </View>
+            <Typography size="copy" color={textColor}>
+              {text}
+            </Typography>
           </View>
-          <ChevronForward color="yellow-dark" />
+          <ChevronForward color="yellow-dark" className="flex-none" />
         </TouchableOpacity>
       ) : (
         <View className="flex flex-col items-left w-full">

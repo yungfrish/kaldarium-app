@@ -1,4 +1,6 @@
 import { ListItemProduct } from "@ui/ListItemProduct/ListItemProduct";
+import { ListItemEvent } from "@ui/ListItemEvent/ListItemEvent";
+import { ListItemInfo } from "@ui/ListItemInfo/ListItemInfo";
 import { Tag } from "@ui/Tag/Tag";
 import { TagStatus } from "@ui/TagStatus/TagStatus";
 import * as React from "react";
@@ -33,24 +35,26 @@ export default function PlaygroundScreen({ navigation }) {
           <Tag intent="kartoffel" />
           <Tag intent="tomate" />
         </View>
+        <View className="flex flex-row items-start justify-start gap-8 w-full">
+          <TagStatus intent="danger" text="Gefahr" />
+          <TagStatus intent="fine" text="Alles gut" />
+          <TagStatus intent="warning" text="Achtung" />
+        </View>
         <View className="flex flex-col w-full gap-y-8">
           <ListItemProduct
             navigation={navigation}
-            title="Product All Incl."
-            text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr."
+            title="Product Item"
+            text="Detailed Product Description goes here."
             isBio
             link="Gang Gang"
           />
-          <ListItemProduct
+          <ListItemEvent
             navigation={navigation}
-            title="No Link, No Zelda"
-            text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr."
-            isBio={false}
+            title="Pest Item"
+            month="Jan"
+            hasTags={true}
           />
         </View>
-        <TagStatus intent="danger" text="Gefahr" />
-        <TagStatus intent="fine" text="Alles gut" />
-        <TagStatus intent="warning" text="Achtung" />
       </View>
     </ImageBackground>
   );
