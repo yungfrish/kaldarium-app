@@ -28,14 +28,14 @@ export default function PlaygroundScreen({ navigation }) {
       }}
     >
       <View className="gap-y-8 bg-yellow-light-100 w-full px-32 py-32 items-start">
-        <View className="flex flex-row items-start justify-start gap-8 w-full">
+        <View className="flex flex-row flex-wrap items-start justify-start gap-8 w-full">
           <Tag />
           <Tag intent="gurke" />
           <Tag intent="karotte" />
           <Tag intent="kartoffel" />
           <Tag intent="tomate" />
         </View>
-        <View className="flex flex-row items-start justify-start gap-8 w-full">
+        <View className="flex flex-row flex-wrap items-start justify-start gap-8 w-full">
           <TagStatus intent="danger" text="Gefahr" />
           <TagStatus intent="fine" text="Alles gut" />
           <TagStatus intent="warning" text="Achtung" />
