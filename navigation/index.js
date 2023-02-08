@@ -1,20 +1,24 @@
-import { FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Calendar from "@svg/calendar.svg";
+import CalendarActive from "@svg/calendar_active.svg";
+import Home from "@svg/home.svg";
+import HomeActive from "@svg/home_active.svg";
+import Settings from "@svg/settings.svg";
+import SettingsActive from "@svg/settings_active.svg";
+import { Typography } from "@ui/Typography/Typography";
 import * as React from "react";
-import { Pressable } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 
 import LinkingConfiguration from "./LinkingConfiguration";
 import useCachedResources from "../hooks/useCachedResources";
 import CalendarScreen from "../screens/CalendarScreen";
-import HomeScreen from "../screens/HomeScreen";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import OnboardingScreen from "../screens/OnboardingScreen";
 import PlantsScreen from "../screens/PlantsScreen";
 import PlaygroundScreen from "../screens/PlaygroundScreen";
-import StorybookScreen from "../screens/StorybookScreen";
 
 export default function Navigation() {
   return (
@@ -53,6 +57,71 @@ function RootNavigator() {
   );
 }
 
+function CustomTabBar({ state, descriptors, navigation }) {
+  return (
+    <View
+      style={{
+        shadowColor: "#756e55",
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.12,
+        shadowRadius: 32,
+      }}
+      className="flex flex-row justify-between w-full pt-3 px-[30] pb-10 bg-yellow-light-100"
+    >
+      {state.routes.map((route, index) => {
+        const { options } = descriptors[route.key];
+        const label =
+          options.tabBarLabel !== undefined
+            ? options.tabBarLabel
+            : options.title !== undefined
+            ? options.title
+            : "";
+
+        const isFocused = state.index === index;
+
+        const onPress = () => {
+          const event = navigation.emit({
+            type: "tabPress",
+            target: route.key,
+          });
+
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate(route.name);
+          }
+        };
+
+        const onLongPress = () => {
+          navigation.emit({
+            type: "tabLongPress",
+            target: route.key,
+          });
+        };
+
+        return (
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityState={isFocused ? { selected: true } : {}}
+            accessibilityLabel={options.tabBarAccessibilityLabel}
+            testID={options.tabBarTestID}
+            onPress={onPress}
+            onLongPress={onLongPress}
+            className={`flex flex-row items-center h-10 py-2 px-3 ml-0 rounded-12 ${
+              isFocused ? "bg-rose" : ""
+            }`}
+          >
+            {isFocused ? options.tabBarActiveIcon : options.tabBarIcon}
+            {label !== "" && (
+              <Typography className="ml-3" size="label">
+                {label}
+              </Typography>
+            )}
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
+}
+
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  */
@@ -61,69 +130,37 @@ const BottomTab = createBottomTabNavigator();
 function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
+      tabBar={(props) => <CustomTabBar {...props} />}
       initialRouteName="Home"
       screenOptions={{ headerShown: false }}
     >
       <BottomTab.Screen
         name="Home"
-        component={HomeScreen}
-        options={({ navigation }) => ({
-          title: "Home",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("Modal")}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
-        })}
-      />
-      <BottomTab.Screen
-        name="Plants"
         component={PlantsScreen}
         options={{
-          title: "Plants",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Dein Garten",
+          tabBarIcon: <Home />,
+          tabBarActiveIcon: <HomeActive />,
         }}
       />
-      <BottomTab.Screen
-        name="Playground"
-        component={PlaygroundScreen}
-        options={{
-          title: "Playground",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-
       <BottomTab.Screen
         name="Calendar"
         component={CalendarScreen}
         options={{
-          title: "Calendar",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Kalender",
+          tabBarIcon: <Calendar />,
+          tabBarActiveIcon: <CalendarActive />,
         }}
       />
 
       <BottomTab.Screen
-        name="Storybook"
-        component={StorybookScreen}
+        name="Options"
+        component={PlaygroundScreen}
         options={{
-          title: "Storybook",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: <Settings />,
+          tabBarActiveIcon: <SettingsActive />,
         }}
       />
     </BottomTab.Navigator>
   );
-}
-
-function TabBarIcon(props) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }

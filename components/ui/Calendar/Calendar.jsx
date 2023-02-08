@@ -1,87 +1,234 @@
-// Get current work week out of the 52 weeks of the year based on the current date
-
 import { getObjectValue } from "@storage";
 import { Typography } from "@ui/Typography/Typography";
-import React, { useCallback } from "react";
-import { View, Text, FlatList, SafeAreaView } from "react-native";
+import React, { useRef, useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  LayoutAnimation,
+  Platform,
+  UIManager,
+} from "react-native";
+
+import { CalendarItem } from "./_CalendarItem";
+import { CollapsibleGroup } from "./_CollapsibleGroup";
+import { WeekHead } from "./_WeekHead";
 
 export const Calendar = () => {
+  const scrollViewRef = useRef(null);
+  const [isDangerCollapsed, setIsDangerCollapsed] = useState(true);
+  const [isSeedCollapsed, setIsSeedCollapsed] = useState(true);
+  const [currentMonth, setCurrentMonth] = useState("");
   const { data, isLoading } = getObjectValue("plants");
+  if (
+    Platform.OS === "android" &&
+    UIManager.setLayoutAnimationEnabledExperimental
+  ) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+  const collapsibleOpacityAnimation = {
+    duration: 200,
+    create: {
+      duration: 200,
+      type: LayoutAnimation.Types.easeInEaseOut,
+      property: LayoutAnimation.Properties.opacity,
+    },
+    update: {
+      type: LayoutAnimation.Types.easeInEaseOut,
+    },
+    delete: {
+      type: LayoutAnimation.Types.easeInEaseOut,
+      property: LayoutAnimation.Properties.opacity,
+    },
+  };
 
-  const onViewableItemsChanged = useCallback(({ viewableItems }) => {
-    // console.log(viewableItems);
-  }, []);
+  useEffect(() => {
+    if (scrollViewRef.current) {
+      initialScrollPosition();
+    }
+  }, [scrollViewRef.current]);
+
+  useEffect(() => {
+    if (activeWeekNumber) {
+      setCurrentMonth(getCurrentMonth(activeWeekNumber));
+    }
+  }, [activeWeekNumber, isLoading]);
 
   if (isLoading) {
     return <Text>Loading...</Text>;
   }
 
+  /**
+   * initialScrollPosition
+   * ---------------------------------------------------------------
+   * @description Scrolls to the current week
+   */
+  const initialScrollPosition = () => {
+    scrollViewRef.current?.scrollTo({
+      x: 87 * (activeWeekNumber - 1),
+      animated: true,
+    });
+  };
+
+  /**
+   * getCurrentMonth
+   * ---------------------------------------------------------------
+   * @description Returns the current month based on the week number
+   * @param {Number} weekNumber
+   */
+  const getCurrentMonth = (weekNumber) =>
+    new Date(currentDate.getFullYear(), 0, weekNumber * 7).toLocaleString(
+      "de-DE",
+      { month: "long" }
+    );
+
+  /**
+   * getPlantsByType
+   * ---------------------------------------------------------------
+   * @description Returns an array of plants based on the type
+   * @param {String} type
+   * @returns {Array}
+   */
+  const getPlantsByType = (type) =>
+    data
+      .filter((plant) => plant.status.filter((status) => status.type === type))
+      .map((plant) => {
+        return {
+          ...plant,
+          status: plant.status.find((status) => status.type === type),
+        };
+      });
+
+  /**
+   * toggleCollapse
+   * ---------------------------------------------------------------
+   * @description Toggles the collapse state of the CollapsibleGroup
+   * @param {Boolean} value
+   * @param {Function} callback
+   */
+  const toggleCollapse = (value, callback) => {
+    LayoutAnimation.configureNext(collapsibleOpacityAnimation);
+    callback((value) => !value);
+  };
+
   const currentDate = new Date();
   const startDate = new Date(currentDate.getFullYear(), 0, 1);
   const days = Math.floor((currentDate - startDate) / (24 * 60 * 60 * 1000));
-
-  const activeWeekNumber = Math.ceil(days / 7);
   const weeks = Array.from({ length: 52 }, (_, i) => i + 1);
-
-  // Reduce weeks array with plants array of objects. Add plant object reference to the week if the status array has a object with key start that is equal to the week number, else return the week array item without the plant object reference. Keep combining the week with the plant until the end key is equal to the week number. Add each plant to the week in an array if the start key is equal to the week number or if the start key is less than the week number and the end key is greater than the week number. Plant can be undefined.
-  const weeksWithPlants = weeks.reduce((acc, week) => {
-    const weekWithPlant = data.reduce(
-      (acc, plant) => {
-        if (
-          plant.status.some(
-            (status) =>
-              status.start === week ||
-              (status.start < week && status.end >= week)
-          )
-        ) {
-          // acc.plants can be undefined
-          if (acc.plants) {
-            return { ...acc, plants: [...acc.plants, plant] };
-          } else {
-            return { ...acc, plants: [plant] };
-          }
-        }
-
-        return acc;
-      },
-      { week }
-    );
-
-    acc.push(weekWithPlant);
-
-    return acc;
-  }, []);
-
-  const viewabilityConfig = {
-    viewAreaCoveragePercentThreshold: 40,
-    waitForInteraction: true,
-  };
-
-  const renderItem = ({ week, plants }) => (
-    <View
-      style={{ width: 87 }}
-      className="flex border-r items-center justify-start"
-    >
-      <Typography>KW {week}</Typography>
-
-      {plants &&
-        plants.map((plant) => (
-          <Typography key={plant.id}>{plant.title}</Typography>
-        ))}
-    </View>
-  );
+  const activeWeekNumber = Math.ceil(days / 7);
+  const aggregatedSeeds = getPlantsByType("seed");
+  const aggregatedDangers = getPlantsByType("danger");
 
   return (
-    <SafeAreaView className="mx-[5]">
-      <FlatList
-        data={weeksWithPlants}
-        renderItem={({ item }) => renderItem(item)}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        initialScrollIndex={activeWeekNumber - 1}
-        onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={viewabilityConfig}
-      />
+    <SafeAreaView className="flex">
+      <ScrollView stickyHeaderIndices={[0]}>
+        <View className="flex flex-row justify-center items-center h-[76]">
+          <Typography size="h1">{currentMonth}</Typography>
+        </View>
+        <CollapsibleGroup
+          isCollapsed={isSeedCollapsed}
+          setIsCollapsed={setIsSeedCollapsed}
+          offset={128}
+          length={aggregatedSeeds.length}
+          color="green"
+          onClick={() => toggleCollapse(isSeedCollapsed, setIsSeedCollapsed)}
+        >
+          Aussähen
+        </CollapsibleGroup>
+
+        <CollapsibleGroup
+          isCollapsed={isDangerCollapsed}
+          offset={128 + 16 + 48 + 64 * aggregatedSeeds.length}
+          length={aggregatedDangers.length}
+          color="error"
+          onClick={() =>
+            toggleCollapse(isDangerCollapsed, setIsDangerCollapsed)
+          }
+        >
+          In Gefahr
+        </CollapsibleGroup>
+
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          ref={scrollViewRef}
+          style={{
+            height:
+              128 +
+              16 +
+              48 +
+              64 * aggregatedSeeds.length +
+              64 * aggregatedDangers.length,
+          }}
+          scrollEventThrottle={100}
+          onScroll={(event) => {
+            const scrollPosition = event.nativeEvent.contentOffset.x;
+            const weekNumber = Math.ceil(scrollPosition / 87) + 1;
+            // Get german month name from week number
+            const month = getCurrentMonth(weekNumber);
+
+            setCurrentMonth(month);
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              width: 87 * 52,
+              height: "100%",
+              paddingLeft: 20,
+              paddingRight: 20,
+            }}
+          >
+            {weeks.map((week) => (
+              <WeekHead
+                key={week}
+                week={week}
+                activeWeekNumber={activeWeekNumber}
+              />
+            ))}
+
+            {aggregatedSeeds.length > 0 && (
+              <View
+                style={{
+                  top: 100,
+                }}
+                className="z-10 w-full absolute"
+              >
+                {!!isSeedCollapsed &&
+                  aggregatedSeeds.map((plant, index) => (
+                    <CalendarItem
+                      key={plant.id}
+                      plant={plant}
+                      index={index}
+                      length={aggregatedSeeds.length}
+                    />
+                  ))}
+              </View>
+            )}
+
+            {aggregatedDangers.length > 0 && (
+              <View
+                style={{
+                  top: 100 + 16 + 48 + 64 * aggregatedSeeds.length,
+                }}
+                className="z-10 w-full absolute"
+              >
+                {!!isDangerCollapsed &&
+                  aggregatedDangers.map((plant, index) => (
+                    <CalendarItem
+                      key={plant.id}
+                      plant={plant}
+                      index={aggregatedSeeds.length + index}
+                      length={aggregatedDangers.length}
+                    />
+                  ))}
+              </View>
+            )}
+          </View>
+        </ScrollView>
+      </ScrollView>
     </SafeAreaView>
   );
 };

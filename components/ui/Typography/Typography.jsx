@@ -1,4 +1,3 @@
-// button.tsx
 import { cva, cx } from "cva";
 import React from "react";
 import { Text } from "react-native";
@@ -51,8 +50,12 @@ const typographyStyles = cva("flex text-base font-normal tracking-wide", {
   },
 });
 
-export const Typography = ({
-  size = "copy",
-  children,
-  color = "text-green-medium",
-}) => <Text className={cx(typographyStyles({ size }), color)}>{children}</Text>;
+export const Typography = (props) => {
+  const { size = "copy", children, color = "text-green-medium" } = props;
+
+  return (
+    <Text className={cx(typographyStyles({ size }), color)} {...props}>
+      {children}
+    </Text>
+  );
+};
