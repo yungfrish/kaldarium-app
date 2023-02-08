@@ -34,7 +34,10 @@ module.exports = {
           light: "#D3DCE6",
         },
         rose: "#FFC5D3",
-        orange: "#FF9B68",
+        orange: {
+          dark: "#FBA478",
+          DEFAULT: "#FF9B68",
+        },
         error: "#FF5170",
 
         // plants

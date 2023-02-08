@@ -4,12 +4,12 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState, useRef } from "react";
 import { AppState } from "react-native";
 
-import { storeData, getStringValue } from "../helper/AsyncStorage";
+import { storeData, getStringValue, clearStore } from "../helper/AsyncStorage";
 import { supabase } from "../supabaseClient";
 
 export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
-  const [firstLaunch, setFirstLaunch] = useState(null);
+  const [showOnboarding, setShowOnboarding] = useState(null);
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
@@ -47,22 +47,14 @@ export default function useCachedResources() {
     );
 
     async function setData() {
-      const appData = await getStringValue("kaldariumAppLaunched");
+      const appData = await getStringValue("ShowOnboarding");
       if (appData == null) {
-        setFirstLaunch(true);
-        await storeData("kaldariumAppLaunched", "false");
+        await storeData("ShowOnboarding", "true");
+        setShowOnboarding(true);
+      } else if (appData === "true") {
+        setShowOnboarding(true);
       } else {
-        setFirstLaunch(false);
-      }
-
-      const date = new Date();
-
-      const workWeek = [];
-      const day = date.getDay();
-      const diff = date.getDate() - day + (day === 0 ? -6 : 1);
-      for (let i = 0; i < 7; i++) {
-        const day = new Date(date.setDate(diff + i));
-        workWeek.push(day);
+        setShowOnboarding(false);
       }
     }
 
@@ -97,5 +89,5 @@ export default function useCachedResources() {
     };
   }, []);
 
-  return { isLoadingComplete, firstLaunch, appStateVisible };
+  return { isLoadingComplete, showOnboarding, appStateVisible };
 }

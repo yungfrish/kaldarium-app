@@ -16,7 +16,9 @@ import useCachedResources from "../hooks/useCachedResources";
 import CalendarScreen from "../screens/CalendarScreen";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import OnboardingScreen from "../screens/OnboardingScreen";
+import OnboardingNotificationsScreen from "../screens/OnboardingNotificationsScreen";
+import OnboardingPlantsScreen from "../screens/OnboardingPlantsScreen";
+import OnboardingSplashScreen from "../screens/OnboardingSplashScreen";
 import PlantsScreen from "../screens/PlantsScreen";
 import PlaygroundScreen from "../screens/PlaygroundScreen";
 
@@ -34,14 +36,26 @@ export default function Navigation() {
 const Stack = createNativeStackNavigator();
 
 function RootNavigator() {
-  const { firstLaunch } = useCachedResources();
+  const { showOnboarding } = useCachedResources();
 
-  console.log(firstLaunch);
   return (
-    firstLaunch != null && (
+    showOnboarding != null && (
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {firstLaunch && (
-          <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+        {showOnboarding && (
+          <>
+            <Stack.Screen
+              name="OnboardingSplash"
+              component={OnboardingSplashScreen}
+            />
+            <Stack.Screen
+              name="OnboardingPlants"
+              component={OnboardingPlantsScreen}
+            />
+            <Stack.Screen
+              name="OnboardingNotifications"
+              component={OnboardingNotificationsScreen}
+            />
+          </>
         )}
         <Stack.Screen name="Root" component={BottomTabNavigator} />
         <Stack.Screen
