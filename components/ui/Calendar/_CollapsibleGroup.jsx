@@ -40,7 +40,7 @@ export const CollapsibleGroup = ({
 
   return (
     <TouchableOpacity
-      className="absolute z-10 pl-32 pr-9 flex flex-row items-center justify-between w-full"
+      className="absolute z-[1] pl-32 pr-9 flex flex-row items-center justify-between w-full"
       onPress={onPress}
       style={{
         top: offset,

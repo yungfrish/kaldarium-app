@@ -123,7 +123,7 @@ export const Calendar = () => {
   return (
     <SafeAreaView className="flex">
       <ScrollView stickyHeaderIndices={[0]}>
-        <View className="flex flex-row justify-center items-center h-[76]">
+        <View className="flex flex-row justify-center items-center h-[76] bg-yellow-light-100 z-50">
           <Typography size="h1">{currentMonth}</Typography>
         </View>
         <CollapsibleGroup
