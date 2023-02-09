@@ -2,7 +2,7 @@ import { Plant } from "@ui/Plant/Plant";
 import * as React from "react";
 import { Text, View, ImageBackground } from "react-native";
 
-import { getObjectValue, getAllStorageKeys } from "../helper/AsyncStorage";
+import { getObjectValue } from "../helper/AsyncStorage";
 
 export default function PlantsScreen({ navigation }) {
   const { data: plants, isLoading: isPlantsLoading } = getObjectValue("plants");
@@ -16,7 +16,7 @@ export default function PlantsScreen({ navigation }) {
   return (
     <ImageBackground
       className="bg-yellow-light-100"
-      source={require("../assets/png/01.png")}
+      source={require("../assets/png/HomePattern.png")}
       style={{
         flex: 1,
         resizeMode: "cover",

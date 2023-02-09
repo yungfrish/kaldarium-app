@@ -12,6 +12,8 @@ export const CollapsibleGroup = ({
   children,
 }) => {
   const [rotateAnimation] = useState(new Animated.Value(0));
+  const textColor = color === "green" ? "text-green" : "text-error";
+  const backgroundColor = color === "green" ? "bg-green/10" : "bg-error/10";
 
   // Write a repeatable function to handle the animation of the chevron rotation
   const handleAnimation = () => {
@@ -47,12 +49,12 @@ export const CollapsibleGroup = ({
       }}
     >
       <View className="flex flex-row items-center gap-x-[10]">
-        <View className={`bg-${color}/10 rounded-full px-2`}>
-          <Typography size="copy" className={`text-${color}`}>
+        <View className={backgroundColor + " rounded-full px-2"}>
+          <Typography size="copy" className={textColor}>
             {length}
           </Typography>
         </View>
-        <Typography size="h2" className={`text-${color}`}>
+        <Typography size="h2" className={textColor}>
           {children}
         </Typography>
       </View>

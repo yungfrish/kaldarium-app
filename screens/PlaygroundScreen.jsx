@@ -1,6 +1,6 @@
-import { ListItemProduct } from "@ui/ListItemProduct/ListItemProduct";
 import { ListItemEvent } from "@ui/ListItemEvent/ListItemEvent";
 import { ListItemInfo } from "@ui/ListItemInfo/ListItemInfo";
+import { ListItemProduct } from "@ui/ListItemProduct/ListItemProduct";
 import { Tag } from "@ui/Tag/Tag";
 import { TagStatus } from "@ui/TagStatus/TagStatus";
 import * as React from "react";
@@ -19,7 +19,7 @@ export default function PlaygroundScreen({ navigation }) {
   return (
     <ImageBackground
       className="bg-yellow-light-100"
-      source={require("../assets/png/01.png")}
+      source={require("../assets/png/HomePattern.png")}
       style={{
         flex: 1,
         resizeMode: "cover",
@@ -52,7 +52,7 @@ export default function PlaygroundScreen({ navigation }) {
             navigation={navigation}
             title="Pest Item"
             month="Jan"
-            hasTags={true}
+            hasTags
           />
           <ListItemInfo intent="water" text="Täglich 2x gießen" />
           <ListItemInfo intent="light" text="In den Schatten stellen" />

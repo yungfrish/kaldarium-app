@@ -10,7 +10,9 @@ export const WeekHead = ({ week, activeWeekNumber }) => {
         width: 87,
         height: "100%",
       }}
-      className="border-r-2 border-r-yellow-light-200 items-center justify-start pt-2"
+      className={`border-r-2 border-r-yellow-light-200 ${
+        activeWeekNumber === week ? "bg-yellow-light-200/[0.32]" : ""
+      } items-center justify-start pt-2`}
     >
       <View
         style={{

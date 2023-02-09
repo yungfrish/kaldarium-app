@@ -1,7 +1,7 @@
 import { Button } from "@ui/Button/Button";
 import { Typography } from "@ui/Typography/Typography";
 import React from "react";
-import { StyleSheet, View, SafeAreaView } from "react-native";
+import { View, SafeAreaView } from "react-native";
 
 import { storeData } from "../helper/AsyncStorage";
 
@@ -35,24 +35,3 @@ export default function OnboardingNotificationsScreen({ navigation }) {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  link: {
-    marginTop: 15,
-    paddingVertical: 15,
-  },
-  linkText: {
-    fontSize: 14,
-    color: "#2e78b7",
-  },
-});
