@@ -4,7 +4,12 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState, useRef } from "react";
 import { AppState } from "react-native";
 
-import { storeData, getStringValue, clearStore } from "../helper/AsyncStorage";
+import {
+  storeData,
+  getStringValue,
+  refreshActivePlants,
+  clearStore,
+} from "../helper/AsyncStorage";
 import { supabase } from "../supabaseClient";
 
 export default function useCachedResources() {
@@ -19,7 +24,7 @@ export default function useCachedResources() {
     if (error) {
       console.error("error", error);
     } else {
-      await storeData("plants", data);
+      await storeData("KaldariumPlants", data);
     }
   };
 
@@ -37,7 +42,8 @@ export default function useCachedResources() {
           if (error) {
             console.warn("Error retrieving data from db: ", error);
           } else {
-            await storeData("plants", plants);
+            await storeData("KaldariumPlants", plants);
+            await refreshActivePlants();
           }
         }
 
@@ -73,6 +79,7 @@ export default function useCachedResources() {
         });
 
         await getPlants();
+        await refreshActivePlants();
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);

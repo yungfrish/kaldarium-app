@@ -14,6 +14,25 @@ const storeData = async (storageKey, value) => {
   }
 };
 
+const refreshActivePlants = async () => {
+  try {
+    const activePlantIds = await getObjectValue("KaldariumActivePlantIds");
+    const plants = await getObjectValue("KaldariumPlants");
+
+    const activePlants = plants.filter((plant) =>
+      activePlantIds.includes(plant.id)
+    );
+
+    await storeData("KaldariumActivePlants", activePlants);
+
+    return { msg: `Refreshing successful` };
+  } catch (error) {
+    // refreshing error
+    console.log(error);
+    return { error: true, msg: `Refreshing failed` };
+  }
+};
+
 // Getting Data
 const getStringValue = async (storageKey) => {
   try {
@@ -25,7 +44,17 @@ const getStringValue = async (storageKey) => {
   }
 };
 
-const getObjectValue = (storageKey) => {
+const getObjectValue = async (storageKey) => {
+  try {
+    const result = await AsyncStorage.getItem(storageKey);
+    return result ? JSON.parse(result) : [];
+  } catch (error) {
+    // error reading value
+    console.log(error);
+  }
+};
+
+const useGetObjectValue = (storageKey) => {
   return useQuery(storageKey, async () => {
     const result = await AsyncStorage.getItem(storageKey);
 
@@ -173,7 +202,8 @@ export const AsyncStoreKeyMap = {
 export {
   storeData,
   getStringValue,
-  getObjectValue,
+  useGetObjectValue,
+  refreshActivePlants,
   updateObjectData,
   upsertObjectData,
   removeData,

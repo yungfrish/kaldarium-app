@@ -2,7 +2,7 @@ import { Typography } from "@ui/Typography/Typography";
 import React from "react";
 import { View } from "react-native";
 
-export const WeekHead = ({ week, activeWeekNumber }) => {
+export const WeekHead = ({ week, activeWeekNumber, length, index }) => {
   return (
     <View
       key={week}
@@ -10,9 +10,10 @@ export const WeekHead = ({ week, activeWeekNumber }) => {
         width: 87,
         height: "100%",
       }}
-      className={`border-r-2 border-r-yellow-light-200 ${
-        activeWeekNumber === week ? "bg-yellow-light-200/[0.32]" : ""
-      } items-center justify-start pt-2`}
+      className={`${length === index + 1 ? "border-r-0" : "border-r-2"}
+       border-r-yellow-light-200 ${
+         activeWeekNumber === week ? "bg-yellow-light-200/[0.32]" : ""
+       } items-center justify-start pt-2`}
     >
       <View
         style={{

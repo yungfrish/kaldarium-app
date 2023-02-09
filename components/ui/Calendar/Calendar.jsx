@@ -1,26 +1,30 @@
-import { getObjectValue } from "@storage";
+import { useGetObjectValue } from "@storage";
+import AddCircled from "@svg/add_circled.svg";
+import { Button } from "@ui/Button/Button";
 import { Typography } from "@ui/Typography/Typography";
 import React, { useRef, useEffect, useState } from "react";
 import {
   View,
   Text,
-  SafeAreaView,
   ScrollView,
   LayoutAnimation,
   Platform,
   UIManager,
+  ImageBackground,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { CalendarItem } from "./_CalendarItem";
 import { CollapsibleGroup } from "./_CollapsibleGroup";
 import { WeekHead } from "./_WeekHead";
 
-export const Calendar = () => {
+export const Calendar = ({ navigation }) => {
   const scrollViewRef = useRef(null);
   const [isDangerCollapsed, setIsDangerCollapsed] = useState(true);
   const [isSeedCollapsed, setIsSeedCollapsed] = useState(true);
   const [currentMonth, setCurrentMonth] = useState("");
-  const { data, isLoading } = getObjectValue("plants");
+  const { data, isLoading } = useGetObjectValue("KaldariumActivePlants");
+
   if (
     Platform.OS === "android" &&
     UIManager.setLayoutAnimationEnabledExperimental
@@ -96,7 +100,7 @@ export const Calendar = () => {
       .map((plant) => {
         return {
           ...plant,
-          status: plant.status.find((status) => status.type === type),
+          status: plant.status.filter((status) => status.type === type),
         };
       });
 
@@ -119,124 +123,179 @@ export const Calendar = () => {
   const activeWeekNumber = Math.ceil(days / 7);
   const aggregatedSeeds = getPlantsByType("seed");
   const aggregatedDangers = getPlantsByType("danger");
+  const weeksToRenderNoData = Array.from(
+    { length: 4 },
+    (_, i) => i + activeWeekNumber - 1
+  );
 
   return (
     <SafeAreaView className="flex">
-      <ScrollView stickyHeaderIndices={[0]}>
-        <View
-          className="flex flex-row justify-center items-center h-[76] bg-yellow-light-100 z-50"
-          style={{
-            shadowColor: "#756e55",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.12,
-            shadowRadius: 2,
-          }}
-        >
-          <Typography size="h1">{currentMonth}</Typography>
-        </View>
-        <CollapsibleGroup
-          isCollapsed={isSeedCollapsed}
-          setIsCollapsed={setIsSeedCollapsed}
-          offset={128}
-          length={aggregatedSeeds.length}
-          color="green"
-          onClick={() => toggleCollapse(isSeedCollapsed, setIsSeedCollapsed)}
-        >
-          Aussähen
-        </CollapsibleGroup>
-
-        <CollapsibleGroup
-          isCollapsed={isDangerCollapsed}
-          offset={128 + 16 + 48 + 64 * aggregatedSeeds.length}
-          length={aggregatedDangers.length}
-          color="error"
-          onClick={() =>
-            toggleCollapse(isDangerCollapsed, setIsDangerCollapsed)
-          }
-        >
-          In Gefahr
-        </CollapsibleGroup>
-
+      {data && data.length > 0 ? (
         <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          ref={scrollViewRef}
-          style={{
-            height:
-              128 +
-              16 +
-              48 +
-              64 * aggregatedSeeds.length +
-              64 * aggregatedDangers.length,
-          }}
-          scrollEventThrottle={100}
-          onScroll={(event) => {
-            const scrollPosition = event.nativeEvent.contentOffset.x;
-            const weekNumber = Math.ceil(scrollPosition / 87) + 1;
-            // Get german month name from week number
-            const month = getCurrentMonth(weekNumber);
+          stickyHeaderIndices={[0]}
+          showsVerticalScrollIndicator={false}
+        >
+          <View
+            className="flex flex-row flex-grow justify-center items-center h-[76] bg-yellow-light-100 z-50"
+            style={{
+              shadowColor: "#756e55",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.12,
+              shadowRadius: 2,
+            }}
+          >
+            <Typography size="h1">{currentMonth}</Typography>
+          </View>
+          <CollapsibleGroup
+            isCollapsed={isSeedCollapsed}
+            setIsCollapsed={setIsSeedCollapsed}
+            offset={128}
+            length={aggregatedSeeds.length}
+            color="green"
+            onClick={() => toggleCollapse(isSeedCollapsed, setIsSeedCollapsed)}
+          >
+            Aussähen
+          </CollapsibleGroup>
 
-            setCurrentMonth(month);
+          <CollapsibleGroup
+            isCollapsed={isDangerCollapsed}
+            offset={128 + 16 + 48 + 64 * aggregatedSeeds.length}
+            length={aggregatedDangers.length}
+            color="error"
+            onClick={() =>
+              toggleCollapse(isDangerCollapsed, setIsDangerCollapsed)
+            }
+          >
+            In Gefahr
+          </CollapsibleGroup>
+
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            ref={scrollViewRef}
+            style={{
+              height:
+                128 +
+                16 +
+                48 +
+                64 * aggregatedSeeds.length +
+                64 * aggregatedDangers.length,
+            }}
+            scrollEventThrottle={100}
+            onScroll={(event) => {
+              const scrollPosition = event.nativeEvent.contentOffset.x;
+              const weekNumber = Math.ceil(scrollPosition / 87) + 1;
+              // Get german month name from week number
+              const month = getCurrentMonth(weekNumber);
+
+              setCurrentMonth(month);
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                flexWrap: "wrap",
+                width: 87 * 52,
+                paddingLeft: 20,
+                paddingRight: 20,
+                flexGrow: 1,
+              }}
+            >
+              {weeks.map((week) => (
+                <WeekHead
+                  key={week}
+                  week={week}
+                  activeWeekNumber={activeWeekNumber}
+                />
+              ))}
+
+              {aggregatedSeeds.length > 0 && (
+                <View
+                  style={{
+                    top: 100,
+                  }}
+                  className="z-10 w-full absolute"
+                >
+                  {!!isSeedCollapsed &&
+                    aggregatedSeeds.map((plant, index) => (
+                      <CalendarItem
+                        key={plant.id}
+                        plant={plant}
+                        index={index}
+                        length={aggregatedSeeds.length}
+                      />
+                    ))}
+                </View>
+              )}
+
+              {aggregatedDangers.length > 0 && (
+                <View
+                  style={{
+                    top: 100 + 16 + 48 + 64 * aggregatedSeeds.length,
+                  }}
+                  className="z-10 w-full absolute"
+                >
+                  {!!isDangerCollapsed &&
+                    aggregatedDangers.map((plant, index) => (
+                      <CalendarItem
+                        key={plant.id}
+                        plant={plant}
+                        index={aggregatedSeeds.length + index}
+                        length={aggregatedDangers.length}
+                      />
+                    ))}
+                </View>
+              )}
+            </View>
+          </ScrollView>
+        </ScrollView>
+      ) : (
+        <ImageBackground
+          source={require("@png/EmptyCalendarPattern.png")}
+          className="flex flex-1"
+          style={{
+            resizeMode: "cover",
           }}
         >
           <View
+            className="flex justify-center items-center pt-7 pb-16 bg-yellow-light-100 z-10"
             style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              width: 87 * 52,
-              height: "100%",
-              paddingLeft: 20,
-              paddingRight: 20,
+              shadowColor: "#756e55",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.12,
+              shadowRadius: 2,
             }}
           >
-            {weeks.map((week) => (
+            <Typography size="h1">{currentMonth}</Typography>
+          </View>
+          <View className="flex flex-row flex-grow px-5">
+            {weeksToRenderNoData.map((week, index) => (
               <WeekHead
                 key={week}
                 week={week}
+                length={weeksToRenderNoData.length}
+                index={index}
                 activeWeekNumber={activeWeekNumber}
               />
             ))}
-
-            {aggregatedSeeds.length > 0 && (
-              <View
-                style={{
-                  top: 100,
-                }}
-                className="z-10 w-full absolute"
-              >
-                {!!isSeedCollapsed &&
-                  aggregatedSeeds.map((plant, index) => (
-                    <CalendarItem
-                      key={plant.id}
-                      plant={plant}
-                      index={index}
-                      length={aggregatedSeeds.length}
-                    />
-                  ))}
-              </View>
-            )}
-
-            {aggregatedDangers.length > 0 && (
-              <View
-                style={{
-                  top: 100 + 16 + 48 + 64 * aggregatedSeeds.length,
-                }}
-                className="z-10 w-full absolute"
-              >
-                {!!isDangerCollapsed &&
-                  aggregatedDangers.map((plant, index) => (
-                    <CalendarItem
-                      key={plant.id}
-                      plant={plant}
-                      index={aggregatedSeeds.length + index}
-                      length={aggregatedDangers.length}
-                    />
-                  ))}
-              </View>
-            )}
           </View>
-        </ScrollView>
-      </ScrollView>
+          <View className="flex gap-y-2 absolute justify-center items-center top-0 left-0 right-0 bottom-0 px-32 w-full">
+            <Typography size="h3" className="text-center">
+              Wo sind die Pflanzen?
+            </Typography>
+            <Typography size="copy" className="text-center mb-16">
+              Füge zuerst Pflanzen zu deinem Kaldarium, um deren Pflanz- und
+              Gefahrpläne einsehen zu können.
+            </Typography>
+            <Button
+              size="small"
+              text="Pflanzen hinzufügen"
+              svg={<AddCircled />}
+              onPress={() => navigation.navigate("Home")}
+            />
+          </View>
+        </ImageBackground>
+      )}
     </SafeAreaView>
   );
 };

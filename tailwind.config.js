@@ -39,12 +39,6 @@ module.exports = {
           DEFAULT: "#FF9B68",
         },
         error: "#FF5170",
-
-        // plants
-        karotte: "#FDE5C6",
-        gurke: "#EDF1E1",
-        tomate: "#FFE3DA",
-        kartoffel: "#F2ECD6",
       },
       borderRadius: {
         full: "100%",

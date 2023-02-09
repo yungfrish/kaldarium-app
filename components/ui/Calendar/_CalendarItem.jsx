@@ -1,43 +1,44 @@
 import { KALDARIUM_SUPABASE_IMAGE_BUCKET_URL } from "@env";
 import { Typography } from "@ui/Typography/Typography";
 import React from "react";
-import { Image, Pressable } from "react-native";
+import { Image, Pressable, View } from "react-native";
 
 export const CalendarItem = ({ plant, index }) => {
-  let plantLength = 0;
-  let plantStart = 0;
-  let plantEnd = 0;
-
-  if (plant && plant.status) {
-    plantEnd = plant.status.end;
-    plantStart = plant.status.start;
-
-    plantLength = plantEnd - plantStart;
-  }
-
   return (
-    <Pressable
-      style={{
-        width: 87 * (plantLength + 1) + 1,
-        height: 56,
-        left: 87 * (plantStart - 1) - 1,
-      }}
-      className="flex flex-row justify-start items-center bg-slate-300 py-2 rounded-16 mb-2"
-    >
-      {plant && (
-        <>
-          <Image
-            source={{
-              uri: `${KALDARIUM_SUPABASE_IMAGE_BUCKET_URL}/plants/${plant.title}.png`,
+    <View className="flex flex-row mb-2">
+      {plant?.status.length &&
+        plant.status.map((status) => (
+          <Pressable
+            style={{
+              width: 87 * (status.end - status.start + 1) + 1,
+              height: 56,
+              left: 87 * (status.start - 1) - 1 + 20,
+              shadowColor: "#fff",
+              shadowOffset: {
+                width: 0,
+                height: 1,
+              },
+              shadowRadius: -2,
+              shadowOpacity: 0.2,
             }}
-            style={{ width: 40, height: 40 }}
-            className="mx-[10px]"
-          />
-          <Typography size="h4" key={plant.id}>
-            {plant.title}
-          </Typography>
-        </>
-      )}
-    </Pressable>
+            className="flex flex-row justify-start items-center bg-slate-300 py-2 rounded-16 overflow-hidden whitespace-nowrap"
+          >
+            {plant && (
+              <>
+                <Image
+                  source={{
+                    uri: `${KALDARIUM_SUPABASE_IMAGE_BUCKET_URL}/plants/${plant.title}.png`,
+                  }}
+                  style={{ width: 40, height: 40 }}
+                  className="mx-[10px]"
+                />
+                <Typography size="h4" key={plant.id}>
+                  {plant.title}
+                </Typography>
+              </>
+            )}
+          </Pressable>
+        ))}
+    </View>
   );
 };

@@ -6,11 +6,11 @@ import { TagStatus } from "@ui/TagStatus/TagStatus";
 import * as React from "react";
 import { Text, View, ImageBackground } from "react-native";
 
-import { getObjectValue } from "../helper/AsyncStorage";
+import { useGetObjectValue } from "../helper/AsyncStorage";
 
 export default function PlaygroundScreen({ navigation }) {
-  // const { data: plants, isLoading } = getObjectValue("plants");
-  const { isLoading } = getObjectValue("plants");
+  // const { data: plants, isLoading } = useGetObjectValue("plants");
+  const { isLoading } = useGetObjectValue("KaldariumPlants");
 
   if (isLoading) {
     return <Text>Loading...</Text>;
