@@ -26,11 +26,12 @@ export default function PlantsScreen({ navigation }) {
       }}
     >
       <View className="flex flex-row flex-wrap p-32 gap-16 align-center">
-        {activePlants.map((plant) => (
-          <View key={plant.id} className="flex flex-row w-1/2">
-            <Plant plant={plant} />
-          </View>
-        ))}
+        {activePlants.length > 0 &&
+          activePlants.map((plant) => (
+            <View key={plant.id} className="flex flex-row w-1/2">
+              <Plant plant={plant} />
+            </View>
+          ))}
       </View>
     </ImageBackground>
   );
