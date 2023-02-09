@@ -22,8 +22,8 @@ export default function OnboardingPlantsScreen({ navigation }) {
     }
   };
 
-  const onSubmitPlants = () => {
-    storeData("KaldariumActivePlants", selectedPlants);
+  const onSubmitPlants = async () => {
+    await storeData("KaldariumActivePlants", selectedPlants);
     navigation.navigate("OnboardingNotifications");
   };
 
@@ -53,7 +53,7 @@ export default function OnboardingPlantsScreen({ navigation }) {
       <View className="flex flex-grow px-16 pb-[40] items-end justify-end absolute bottom-0 left-0 w-full bg-green-medium">
         <Button
           text="Meinen Garten pflanzen"
-          onPress={() => onSubmitPlants()}
+          onPress={async () => await onSubmitPlants()}
         />
       </View>
     </SafeAreaView>
