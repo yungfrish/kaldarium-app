@@ -4,12 +4,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState, useRef } from "react";
 import { AppState } from "react-native";
 
-import {
-  storeData,
-  getStringValue,
-  refreshActivePlants,
-  clearStore,
-} from "../helper/AsyncStorage";
+import { storeData, getStringValue, clearStore } from "../helper/AsyncStorage";
 import { supabase } from "../supabaseClient";
 
 export default function useCachedResources() {
@@ -28,23 +23,75 @@ export default function useCachedResources() {
     }
   };
 
+  const getContents = async () => {
+    const { data, error } = await supabase.from("contents").select("*");
+
+    if (error) {
+      console.error("error", error);
+    } else {
+      await storeData("KaldariumContents", data);
+    }
+  };
+
+  const setOnboardingData = async () => {
+    const onboarding = await getStringValue("ShowOnboarding");
+    if (onboarding == null) {
+      await storeData("ShowOnboarding", "true");
+      setShowOnboarding(true);
+    } else if (onboarding === "true") {
+      setShowOnboarding(true);
+    } else {
+      setShowOnboarding(false);
+    }
+  };
+
+  const revisionRoutine = async () => {
+    const currentRevision = await getStringValue("KaldariumRevision");
+    const { data: version, error: versionError } = await supabase
+      .from("version")
+      .select("revision");
+
+    if (versionError) {
+      console.warn("Error retrieving data from db: ", versionError);
+    }
+
+    if (currentRevision !== version[0].revision.toString()) {
+      await storeData("KaldariumRevision", version[0].revision);
+
+      await getPlants();
+      await getContents();
+    }
+  };
+
+  const loadResourcesAndDataAsync = async () => {
+    try {
+      SplashScreen.preventAutoHideAsync();
+
+      // Load fonts
+      await Font.loadAsync({
+        ...FontAwesome.font,
+        FrauncesRegular: require("../assets/fonts/Fraunces-Regular.ttf"),
+        FrauncesSemi: require("../assets/fonts/Fraunces-SemiBoldItalic.ttf"),
+        SkModernist: require("../assets/fonts/Sk-Modernist-Bold.otf"),
+      });
+
+      await revisionRoutine();
+    } catch (e) {
+      // We might want to provide this error information to an error reporting service
+      console.warn(e);
+    } finally {
+      setLoadingComplete(true);
+      SplashScreen.hideAsync();
+    }
+  };
+
   // Load any resources or data that we need prior to rendering the app
   useEffect(() => {
     const subscription = AppState.addEventListener(
       "change",
       async (nextAppState) => {
         if (appState.current.match(/background/) && nextAppState === "active") {
-          const { data: plants, error } = await supabase
-            .from("plants")
-            .select("*");
-
-          console.log("Retrieve new data from db, might be outdated already!");
-          if (error) {
-            console.warn("Error retrieving data from db: ", error);
-          } else {
-            await storeData("KaldariumPlants", plants);
-            await refreshActivePlants();
-          }
+          await revisionRoutine();
         }
 
         appState.current = nextAppState;
@@ -52,43 +99,7 @@ export default function useCachedResources() {
       }
     );
 
-    async function setData() {
-      const appData = await getStringValue("ShowOnboarding");
-      if (appData == null) {
-        await storeData("ShowOnboarding", "true");
-        setShowOnboarding(true);
-      } else if (appData === "true") {
-        setShowOnboarding(true);
-      } else {
-        setShowOnboarding(false);
-      }
-    }
-
-    setData();
-
-    async function loadResourcesAndDataAsync() {
-      try {
-        SplashScreen.preventAutoHideAsync();
-
-        // Load fonts
-        await Font.loadAsync({
-          ...FontAwesome.font,
-          FrauncesRegular: require("../assets/fonts/Fraunces-Regular.ttf"),
-          FrauncesSemi: require("../assets/fonts/Fraunces-SemiBoldItalic.ttf"),
-          SkModernist: require("../assets/fonts/Sk-Modernist-Bold.otf"),
-        });
-
-        await getPlants();
-        await refreshActivePlants();
-      } catch (e) {
-        // We might want to provide this error information to an error reporting service
-        console.warn(e);
-      } finally {
-        setLoadingComplete(true);
-        SplashScreen.hideAsync();
-      }
-    }
-
+    setOnboardingData();
     loadResourcesAndDataAsync();
 
     return () => {

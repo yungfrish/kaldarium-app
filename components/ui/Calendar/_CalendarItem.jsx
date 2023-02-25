@@ -20,8 +20,9 @@ export const CalendarItem = ({ plant, index }) => {
               },
               shadowRadius: -2,
               shadowOpacity: 0.2,
+              backgroundColor: plant.color,
             }}
-            className="flex flex-row justify-start items-center bg-slate-300 py-2 rounded-16 overflow-hidden whitespace-nowrap"
+            className="flex flex-row justify-start items-center py-2 rounded-16 overflow-hidden whitespace-nowrap"
           >
             {plant && (
               <>

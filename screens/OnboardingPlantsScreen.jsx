@@ -6,11 +6,7 @@ import React, { useState } from "react";
 import { Text, View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import {
-  useGetObjectValue,
-  storeData,
-  refreshActivePlants,
-} from "../helper/AsyncStorage";
+import { useGetObjectValue, storeData } from "../helper/AsyncStorage";
 
 export default function OnboardingPlantsScreen({ navigation }) {
   const [selectedPlants, setSelectedPlants] = useState([]);
@@ -30,7 +26,6 @@ export default function OnboardingPlantsScreen({ navigation }) {
 
   const onSubmitPlants = async () => {
     await storeData("KaldariumActivePlantIds", selectedPlants);
-    await refreshActivePlants();
     navigation.navigate("OnboardingNotifications");
   };
 

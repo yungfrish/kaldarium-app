@@ -52,7 +52,12 @@ export const TagStatus = ({ intent, text, ...props }) => {
         </Typography>
       </View>
 
-      <Typography size="label" color="text-yellow-light-100">
+      <Typography
+        size="label"
+        color={`${
+          intent === "warning" ? "text-green-medium" : "text-yellow-light-100"
+        }`}
+      >
         {text}
       </Typography>
     </View>

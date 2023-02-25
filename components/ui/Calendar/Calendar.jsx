@@ -11,6 +11,7 @@ import {
   Platform,
   UIManager,
   ImageBackground,
+  Dimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -23,7 +24,10 @@ export const Calendar = ({ navigation }) => {
   const [isDangerCollapsed, setIsDangerCollapsed] = useState(true);
   const [isSeedCollapsed, setIsSeedCollapsed] = useState(true);
   const [currentMonth, setCurrentMonth] = useState("");
-  const { data, isLoading } = useGetObjectValue("KaldariumActivePlants");
+  const { data: plants, isLoading: isPlantsLoading } =
+    useGetObjectValue("KaldariumPlants");
+  const { data: activePlantIds, isLoading: isActivePlantIdsLoading } =
+    useGetObjectValue("KaldariumActivePlantIds");
 
   if (
     Platform.OS === "android" &&
@@ -57,11 +61,17 @@ export const Calendar = ({ navigation }) => {
     if (activeWeekNumber) {
       setCurrentMonth(getCurrentMonth(activeWeekNumber));
     }
-  }, [activeWeekNumber, isLoading]);
+  }, [activeWeekNumber, isPlantsLoading, isActivePlantIdsLoading]);
 
-  if (isLoading) {
+  if (isActivePlantIdsLoading || isPlantsLoading) {
     return <Text>Loading...</Text>;
   }
+
+  const windowHeight = Dimensions.get("window").height;
+
+  const activePlants = plants?.filter((plant) =>
+    activePlantIds?.some((id) => id === plant.id)
+  );
 
   /**
    * initialScrollPosition
@@ -95,7 +105,7 @@ export const Calendar = ({ navigation }) => {
    * @returns {Array}
    */
   const getPlantsByType = (type) =>
-    data
+    activePlants
       .filter((plant) => plant.status.filter((status) => status.type === type))
       .map((plant) => {
         return {
@@ -130,10 +140,12 @@ export const Calendar = ({ navigation }) => {
 
   return (
     <SafeAreaView className="flex">
-      {data && data.length > 0 ? (
+      {activePlants && activePlants.length > 0 ? (
         <ScrollView
           stickyHeaderIndices={[0]}
           showsVerticalScrollIndicator={false}
+          className="h-full flex flex-grow"
+          contentContainerStyle={{ flexGrow: 1 }}
         >
           <View
             className="flex flex-row flex-grow justify-center items-center h-[76] bg-yellow-light-100 z-50"
@@ -159,7 +171,11 @@ export const Calendar = ({ navigation }) => {
 
           <CollapsibleGroup
             isCollapsed={isDangerCollapsed}
-            offset={128 + 16 + 48 + 64 * aggregatedSeeds.length}
+            offset={
+              isSeedCollapsed
+                ? 128 + 16 + 48 + 64 * aggregatedSeeds.length
+                : 128 + 16 + 48
+            }
             length={aggregatedDangers.length}
             color="error"
             onClick={() =>
@@ -181,11 +197,11 @@ export const Calendar = ({ navigation }) => {
                 64 * aggregatedSeeds.length +
                 64 * aggregatedDangers.length,
             }}
+            className="flex flex-grow h-full"
             scrollEventThrottle={100}
             onScroll={(event) => {
               const scrollPosition = event.nativeEvent.contentOffset.x;
               const weekNumber = Math.ceil(scrollPosition / 87) + 1;
-              // Get german month name from week number
               const month = getCurrentMonth(weekNumber);
 
               setCurrentMonth(month);
@@ -200,6 +216,7 @@ export const Calendar = ({ navigation }) => {
                 paddingRight: 20,
                 flexGrow: 1,
               }}
+              className="h-full"
             >
               {weeks.map((week) => (
                 <WeekHead
@@ -231,7 +248,9 @@ export const Calendar = ({ navigation }) => {
               {aggregatedDangers.length > 0 && (
                 <View
                   style={{
-                    top: 100 + 16 + 48 + 64 * aggregatedSeeds.length,
+                    top: isSeedCollapsed
+                      ? 100 + 16 + 48 + 64 * aggregatedSeeds.length
+                      : 100 + 16 + 48,
                   }}
                   className="z-10 w-full absolute"
                 >
@@ -252,13 +271,13 @@ export const Calendar = ({ navigation }) => {
       ) : (
         <ImageBackground
           source={require("@png/EmptyCalendarPattern.png")}
-          className="flex flex-1"
+          className="flex flex-grow"
           style={{
             resizeMode: "cover",
           }}
         >
           <View
-            className="flex justify-center items-center pt-7 pb-16 bg-yellow-light-100 z-10"
+            className="flex flex-grow justify-center items-center pt-7 pb-16 bg-yellow-light-100 z-10"
             style={{
               shadowColor: "#756e55",
               shadowOffset: { width: 0, height: 2 },
@@ -268,7 +287,7 @@ export const Calendar = ({ navigation }) => {
           >
             <Typography size="h1">{currentMonth}</Typography>
           </View>
-          <View className="flex flex-row flex-grow px-5">
+          <View className="flex flex-row flex-grow px-5 h-full">
             {weeksToRenderNoData.map((week, index) => (
               <WeekHead
                 key={week}
