@@ -16,6 +16,7 @@ import {
 } from "react-native";
 
 import { useGetObjectValue, storeData } from "../../../helper/AsyncStorage";
+import { ListItemSearch } from "../ListItemSearch/ListItemSearch";
 
 export const SearchModal = ({ navigation }) => {
   const { data: plants, isLoading: isPlantsLoading } =
@@ -25,13 +26,18 @@ export const SearchModal = ({ navigation }) => {
     isLoading: isActivePlantIdsLoading,
     refetch,
   } = useGetObjectValue("KaldariumActivePlantIds");
+  const {
+    data: searchHistory,
+    isLoading: isSearchHistoryLoading,
+    refetch: refetchSearchHistory,
+  } = useGetObjectValue("KaldariumSearchHistory");
 
   const [searchText, setSearchText] = React.useState("");
   const [filteredPlants, setFilteredPlants] = React.useState([]);
   const [selectedPlant, setSelectedPlant] = React.useState(null);
   const [isModalVisible, setIsModalVisible] = React.useState(false);
 
-  if (isPlantsLoading || isActivePlantIdsLoading) {
+  if (isPlantsLoading || isActivePlantIdsLoading || isSearchHistoryLoading) {
     return <Text>Loading...</Text>;
   }
 
@@ -78,6 +84,26 @@ export const SearchModal = ({ navigation }) => {
     refetch();
   };
 
+  // Function that stores the last three search entries in AsyncStorage, so that they can be displayed in the SearchHistory component. Replaces the oldest entry if there are already three entries.
+  const storeSearchEntry = async (text) => {
+    // abstract searchHistory to variable
+    const tempSearchHistory = [...searchHistory] || [];
+
+    if (tempSearchHistory.some((entry) => entry === text)) {
+      return;
+    }
+
+    if (tempSearchHistory.length === 3) {
+      tempSearchHistory.pop();
+    }
+
+    // Insert new entry at the beginning of the array (so that the newest entry is always at the top)
+    tempSearchHistory.unshift(text);
+
+    await storeData("KaldariumSearchHistory", tempSearchHistory);
+    refetchSearchHistory();
+  };
+
   return (
     <View className="flex flex-grow h-full">
       <View className="flex flex-row items-center justify-between p-16">
@@ -91,12 +117,13 @@ export const SearchModal = ({ navigation }) => {
           className="flex flex-grow ml-24 text-[20px] tracking-wide font-skModernist text-green-medium"
           onChangeText={(text) => handleSearch(text)}
           value={searchText}
+          onEndEditing={() => storeSearchEntry(searchText)}
           placeholderTextColor="#AFBFBF"
           selectionColor="#FF9B68"
         />
         {searchText !== "" && (
           <TouchableOpacity
-            onPress={() => setSearchText("")}
+            onPress={() => handleSearch("")}
             className="flex items-center justify-center w-[30] h-[56]"
           >
             <CloseCircled />
@@ -151,17 +178,40 @@ export const SearchModal = ({ navigation }) => {
           </View>
         </ScrollView>
       ) : (
-        <View className="items-center justify-center mt-[120]">
-          <Typography size="copy">Keine Pflanzen</Typography>
-          <Typography size="copy">gefunden</Typography>
-        </View>
+        <>
+          {searchText !== "" ? (
+            <View className="items-center justify-center mt-[120]">
+              <Typography size="copy">Keine Pflanzen</Typography>
+              <Typography size="copy">gefunden</Typography>
+            </View>
+          ) : (
+            <>
+              {searchHistory?.length > 0 && (
+                <View className="flex flex-grow px-32 pt-12">
+                  <Typography size="label" className="text-orange mb-20">
+                    Kürzlich gesucht
+                  </Typography>
+                  {searchHistory.map((entry, index) => (
+                    <View className="mb-4">
+                      <ListItemSearch
+                        key={index}
+                        title={entry}
+                        onPress={(title) => handleSearch(title)}
+                      />
+                    </View>
+                  ))}
+                </View>
+              )}
+            </>
+          )}
+        </>
       )}
 
       <ImageBackground
         source={require("@png/EmptySearchPattern.png")}
         className="absolute left-0 right-0 top-0 bottom-0 flex flex-grow"
         style={{
-          opacity: filteredPlants.length > 0 ? 0 : 1,
+          opacity: filteredPlants.length > 0 || searchText === "" ? 0 : 1,
           zIndex: -1,
         }}
       />
