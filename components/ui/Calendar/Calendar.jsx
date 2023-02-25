@@ -11,7 +11,6 @@ import {
   Platform,
   UIManager,
   ImageBackground,
-  Dimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -66,8 +65,6 @@ export const Calendar = ({ navigation }) => {
   if (isActivePlantIdsLoading || isPlantsLoading) {
     return <Text>Loading...</Text>;
   }
-
-  const windowHeight = Dimensions.get("window").height;
 
   const activePlants = plants?.filter((plant) =>
     activePlantIds?.some((id) => id === plant.id)

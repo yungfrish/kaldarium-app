@@ -1,7 +1,5 @@
-import { KALDARIUM_SUPABASE_IMAGE_BUCKET_URL } from "@env";
 import Search from "@svg/search.svg";
 import { ActionButton } from "@ui/ActionButton/ActionButton";
-import { Button } from "@ui/Button/Button";
 import { FadeInView } from "@ui/FadeInView/FadeInView";
 import { Plant } from "@ui/Plant/Plant";
 import { PlantsStatus } from "@ui/PlantsStatus/PlantsStatus";
@@ -14,10 +12,9 @@ import {
   ScrollView,
   Animated,
   Easing,
-  Image,
 } from "react-native";
-import Modal from "react-native-modal";
 
+import { RemovePlantModal } from "../components/ui/Modals/RemovePlantModal";
 import { useGetObjectValue, storeData } from "../helper/AsyncStorage";
 
 export default function PlantsScreen({ navigation }) {
@@ -204,7 +201,7 @@ export default function PlantsScreen({ navigation }) {
               }}
             >
               <ActionButton
-                onPress={() => navigation.navigate("AddPlant")}
+                onPress={() => navigation.navigate("SearchModal")}
                 svg={<Search />}
               />
             </Animated.View>
@@ -251,7 +248,10 @@ export default function PlantsScreen({ navigation }) {
                   <Typography size="h2" className="text-orange flex-grow">
                     Dein Kaldarium
                   </Typography>
-                  <ActionButton svg={<Search />} />
+                  <ActionButton
+                    svg={<Search />}
+                    onPress={() => navigation.navigate("SearchModal")}
+                  />
                 </View>
                 <View className="flex flex-row flex-wrap items-center">
                   {activePlants.map((plant, index) => (
@@ -292,47 +292,14 @@ export default function PlantsScreen({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
-      <Modal
-        isVisible={isModalVisible}
-        backdropColor="#165556"
-        backdropOpacity={0.8}
-        onBackdropPress={() => setIsModalVisible(false)}
-        className="m-0 justify-end"
-        onModalHide={() => setSelectedPlant(null)}
-      >
-        <View className="flex center  bg-white rounded-t-20 pt-6 px-32 pb-[48]">
-          <View className="flex flex-row items-center">
-            <Image
-              source={{
-                uri: `${KALDARIUM_SUPABASE_IMAGE_BUCKET_URL}/plants/${selectedPlant?.title}.png`,
-              }}
-              style={{ width: 40, height: 40 }}
-              className="mr-2"
-            />
-            <Typography size="h3" className="mt-4">
-              {selectedPlant?.title} aus deinem Garten entfernen?
-            </Typography>
-          </View>
-          <View className="flex flex-row justify-end mt-5">
-            <Typography size="copy">
-              Die {selectedPlant?.title} bereits geerntet? Oder hast du deine{" "}
-              {selectedPlant?.title} tot gepflegt?
-            </Typography>
-          </View>
-          <View className="flex flex-wrap justify-end mt-5">
-            <Button
-              onPress={() => removePlant(selectedPlant)}
-              text={`${selectedPlant?.title} entfernen`}
-              className="mb-2"
-            />
-            <Button
-              onPress={() => setIsModalVisible(false)}
-              text="Abbrechen"
-              intent="secondaryLight"
-            />
-          </View>
-        </View>
-      </Modal>
+
+      <RemovePlantModal
+        selectedPlant={selectedPlant}
+        setSelectedPlant={setSelectedPlant}
+        removePlant={removePlant}
+        isModalVisible={isModalVisible}
+        setIsModalVisible={setIsModalVisible}
+      />
     </FadeInView>
   );
 }

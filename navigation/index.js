@@ -14,13 +14,12 @@ import { View, TouchableOpacity } from "react-native";
 import LinkingConfiguration from "./LinkingConfiguration";
 import useCachedResources from "../hooks/useCachedResources";
 import CalendarScreen from "../screens/CalendarScreen";
-import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import OnboardingNotificationsScreen from "../screens/OnboardingNotificationsScreen";
 import OnboardingPlantsScreen from "../screens/OnboardingPlantsScreen";
 import OnboardingSplashScreen from "../screens/OnboardingSplashScreen";
 import PlantsScreen from "../screens/PlantsScreen";
-import PlaygroundScreen from "../screens/PlaygroundScreen";
+import SearchModalScreen from "../screens/SearchModalScreen";
 
 export default function Navigation() {
   return (
@@ -63,9 +62,11 @@ function RootNavigator() {
           component={NotFoundScreen}
           options={{ title: "Oops!" }}
         />
-        <Stack.Group screenOptions={{ presentation: "modal" }}>
-          <Stack.Screen name="Modal" component={ModalScreen} />
-        </Stack.Group>
+        <Stack.Screen
+          name="SearchModal"
+          component={SearchModalScreen}
+          options={{ presentation: "fullScreenModal" }}
+        />
       </Stack.Navigator>
     )
   );
@@ -170,7 +171,7 @@ function BottomTabNavigator() {
 
       <BottomTab.Screen
         name="Options"
-        component={PlaygroundScreen}
+        component={CalendarScreen}
         options={{
           tabBarIcon: <Settings />,
           tabBarActiveIcon: <SettingsActive />,
