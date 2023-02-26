@@ -1,9 +1,12 @@
+import { useGetObjectValue } from "@storage";
 import { Button } from "@ui/Button/Button";
 import { FadeInView } from "@ui/FadeInView/FadeInView";
 import { Typography } from "@ui/Typography/Typography";
 import { View, ImageBackground, Image } from "react-native";
 
 export default function OnboardingSplashScreen({ navigation }) {
+  const { data: contents, isLoading } = useGetObjectValue("KaldariumContents");
+  console.log(contents);
   return (
     <FadeInView>
       <ImageBackground

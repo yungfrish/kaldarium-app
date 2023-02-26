@@ -1,3 +1,4 @@
+import { useGetObjectValue, storeData } from "@storage";
 import ChevronBackward from "@svg/chevron_backward.svg";
 import CloseCircled from "@svg/close_circled.svg";
 import { ActionButton } from "@ui/ActionButton/ActionButton";
@@ -15,7 +16,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { useGetObjectValue, storeData } from "../../../helper/AsyncStorage";
 import { ListItemSearch } from "../ListItemSearch/ListItemSearch";
 
 export const SearchModal = ({ navigation }) => {
@@ -192,7 +192,7 @@ export const SearchModal = ({ navigation }) => {
                     Kürzlich gesucht
                   </Typography>
                   {searchHistory.map((entry, index) => (
-                    <View className="mb-4">
+                    <View className="mb-4" key={index}>
                       <ListItemSearch
                         key={index}
                         title={entry}

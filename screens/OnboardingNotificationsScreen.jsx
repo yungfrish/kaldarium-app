@@ -1,11 +1,10 @@
+import { storeData } from "@storage";
 import { Button } from "@ui/Button/Button";
 import { FadeInView } from "@ui/FadeInView/FadeInView";
 import { Typography } from "@ui/Typography/Typography";
 import React from "react";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-import { storeData } from "../helper/AsyncStorage";
 
 export default function OnboardingNotificationsScreen({ navigation }) {
   return (

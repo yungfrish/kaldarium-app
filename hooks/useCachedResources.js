@@ -1,10 +1,10 @@
 import { FontAwesome } from "@expo/vector-icons";
+import { storeData, getStringValue, clearStore } from "@storage";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState, useRef } from "react";
 import { AppState } from "react-native";
 
-import { storeData, getStringValue, clearStore } from "../helper/AsyncStorage";
 import { supabase } from "../supabaseClient";
 
 export default function useCachedResources() {
@@ -30,6 +30,16 @@ export default function useCachedResources() {
       console.error("error", error);
     } else {
       await storeData("KaldariumContents", data);
+    }
+  };
+
+  const getPests = async () => {
+    const { data, error } = await supabase.from("pests").select("*");
+
+    if (error) {
+      console.error("error", error);
+    } else {
+      await storeData("KaldariumPests", data);
     }
   };
 
@@ -60,6 +70,7 @@ export default function useCachedResources() {
 
       await getPlants();
       await getContents();
+      await getPests();
     }
   };
 

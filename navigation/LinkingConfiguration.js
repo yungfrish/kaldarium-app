@@ -17,24 +17,14 @@ const linking = {
               Home: "home",
             },
           },
-          PlantsScreen: {
+          OptionsScreen: {
             screens: {
-              Plants: "plants",
-            },
-          },
-          PlaygroundScreen: {
-            screens: {
-              Playground: "playground",
+              Options: "options",
             },
           },
           CalendarScreen: {
             screens: {
               Calendar: "calendar",
-            },
-          },
-          StorybookScreen: {
-            screens: {
-              Storybook: "storybook",
             },
           },
         },

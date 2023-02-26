@@ -1,3 +1,4 @@
+import { useGetObjectValue, storeData } from "@storage";
 import { Button } from "@ui/Button/Button";
 import { FadeInView } from "@ui/FadeInView/FadeInView";
 import { PlantOnboarding } from "@ui/PlantOnboarding/PlantOnboarding";
@@ -5,8 +6,6 @@ import { Typography } from "@ui/Typography/Typography";
 import React, { useState } from "react";
 import { Text, View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-import { useGetObjectValue, storeData } from "../helper/AsyncStorage";
 
 export default function OnboardingPlantsScreen({ navigation }) {
   const [selectedPlants, setSelectedPlants] = useState([]);
@@ -26,7 +25,9 @@ export default function OnboardingPlantsScreen({ navigation }) {
 
   const onSubmitPlants = async () => {
     await storeData("KaldariumActivePlantIds", selectedPlants);
-    navigation.navigate("OnboardingNotifications");
+    // navigation.navigate("OnboardingNotifications");
+    await storeData("ShowOnboarding", "false");
+    navigation.navigate("Root", { screen: "Home" });
   };
 
   return (

@@ -1,6 +1,8 @@
+import { useGetObjectValue, storeData } from "@storage";
 import Search from "@svg/search.svg";
 import { ActionButton } from "@ui/ActionButton/ActionButton";
 import { FadeInView } from "@ui/FadeInView/FadeInView";
+import { RemovePlantModal } from "@ui/Modals/RemovePlantModal";
 import { Plant } from "@ui/Plant/Plant";
 import { PlantsStatus } from "@ui/PlantsStatus/PlantsStatus";
 import { Typography } from "@ui/Typography/Typography";
@@ -13,9 +15,6 @@ import {
   Animated,
   Easing,
 } from "react-native";
-
-import { RemovePlantModal } from "../components/ui/Modals/RemovePlantModal";
-import { useGetObjectValue, storeData } from "../helper/AsyncStorage";
 
 export default function PlantsScreen({ navigation }) {
   const scrollOffsetY = useRef(new Animated.Value(0)).current;
