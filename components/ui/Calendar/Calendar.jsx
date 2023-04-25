@@ -25,8 +25,12 @@ export const Calendar = ({ navigation }) => {
   const [currentMonth, setCurrentMonth] = useState("");
   const { data: plants, isLoading: isPlantsLoading } =
     useGetObjectValue("KaldariumPlants");
+  const { data: pests, isLoading: isPestsLoading } =
+    useGetObjectValue("KaldariumPests");
   const { data: activePlantIds, isLoading: isActivePlantIdsLoading } =
     useGetObjectValue("KaldariumActivePlantIds");
+  const { data: plantsToPests, isLoading: isPlantsToPestsLoading } =
+    useGetObjectValue("KaldariumPestsPlantsRelations");
 
   if (
     Platform.OS === "android" &&
@@ -60,15 +64,36 @@ export const Calendar = ({ navigation }) => {
     if (activeWeekNumber) {
       setCurrentMonth(getCurrentMonth(activeWeekNumber));
     }
-  }, [activeWeekNumber, isPlantsLoading, isActivePlantIdsLoading]);
+  }, [
+    activeWeekNumber,
+    isPlantsLoading,
+    isActivePlantIdsLoading,
+    isPlantsToPestsLoading,
+    isPestsLoading,
+  ]);
 
-  if (isActivePlantIdsLoading || isPlantsLoading) {
+  if (
+    isActivePlantIdsLoading ||
+    isPlantsLoading ||
+    isPlantsToPestsLoading ||
+    isPestsLoading
+  ) {
     return <Text>Loading...</Text>;
   }
 
-  const activePlants = plants?.filter((plant) =>
-    activePlantIds?.some((id) => id === plant.id)
-  );
+  const activePlants = plants
+    ?.filter((plant) => activePlantIds?.some((id) => id === plant.id))
+    .map((plant) => ({
+      ...plant,
+      pests: plantsToPests
+        ?.filter((relation) => relation.plant_id === plant.id)
+        .map((relation) => pests.find((pest) => pest.id === relation.pest_id)),
+    }))
+    // Merge plants status array with pests status array
+    .map((plant) => ({
+      ...plant,
+      status: plant.status.concat(...plant.pests.map((pest) => pest.status)),
+    }));
 
   /**
    * initialScrollPosition

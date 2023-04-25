@@ -27,6 +27,11 @@ const linking = {
               Calendar: "calendar",
             },
           },
+          DetailsScreen: {
+            screens: {
+              Details: "details",
+            },
+          },
         },
       },
       Modal: "modal",

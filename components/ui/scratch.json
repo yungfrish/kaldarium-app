@@ -1,0 +1,53 @@
+{
+  "Aussaat": [
+    {
+      "title": "Saatart",
+      "content": "Jungpflanze oder Direktsaat",
+      "icon": "chevron_double_down"
+    },
+    {
+      "title": "Dauer Jungpflanzenanzucht",
+      "content": "8-10 Wochen",
+      "icon": "hourglass"
+    },
+    {
+      "title": "Mehrere Sätze",
+      "content": "Alle 4 Wochen",
+      "icon": "calendar"
+    },
+    {
+      "title": "Pflanzen pro Quadratmeter",
+      "content": "2",
+      "icon": "category"
+    },
+    {
+      "title": "Anbauort",
+      "content": "Balkonanbau, Freiland oder Gewächshaus",
+      "icon": "home"
+    }
+  ],
+  "Schutz": [
+    {
+      "title": "Frostempfindlichkeit",
+      "content": "hoch / 0°C",
+      "icon": "snowflake"
+    },
+    {
+      "title": "Vliesabdeckung",
+      "content": "Ab Blühbeginn nur bei kalten Nachttemperaturen",
+      "icon": "umbrella"
+    },
+    {
+      "title": "Kulturschutznetz",
+      "content": "Empfohlen",
+      "icon": "grid"
+    }
+  ],
+  "Ernte": [
+    {
+      "title": "Ernte",
+      "content": "Mehrfachernte",
+      "icon": "chevron_double_up"
+    }
+  ]
+}

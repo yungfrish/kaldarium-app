@@ -14,6 +14,7 @@ import { View, TouchableOpacity } from "react-native";
 import LinkingConfiguration from "./LinkingConfiguration";
 import useCachedResources from "../hooks/useCachedResources";
 import CalendarScreen from "../screens/CalendarScreen";
+import DetailsScreen from "../screens/DetailsScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import OnboardingNotificationsScreen from "../screens/OnboardingNotificationsScreen";
 import OnboardingPlantsScreen from "../screens/OnboardingPlantsScreen";
@@ -57,6 +58,11 @@ function RootNavigator() {
           </>
         )}
         <Stack.Screen name="Root" component={BottomTabNavigator} />
+        <Stack.Screen
+          name="Details"
+          component={DetailsScreen}
+          options={{ presentation: "fullScreenModal" }}
+        />
         <Stack.Screen
           name="NotFound"
           component={NotFoundScreen}

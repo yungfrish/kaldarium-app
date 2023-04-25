@@ -16,6 +16,8 @@ import {
   Easing,
 } from "react-native";
 
+import { ListItemInfo } from "../components/ui/ListItemInfo/ListItemInfo";
+
 export default function PlantsScreen({ navigation }) {
   const scrollOffsetY = useRef(new Animated.Value(0)).current;
   const { data: plants, isLoading: isPlantsLoading } =
@@ -260,6 +262,9 @@ export default function PlantsScreen({ navigation }) {
                         index={index}
                         active
                         onActionPress={preparePlantRemoval}
+                        onPress={() =>
+                          navigation.navigate("Details", { plant })
+                        }
                       />
                     </View>
                   ))}
@@ -282,6 +287,9 @@ export default function PlantsScreen({ navigation }) {
                         plant={plant}
                         index={index}
                         onActionPress={addPlant}
+                        onPress={() =>
+                          navigation.navigate("Details", { plant })
+                        }
                       />
                     </View>
                   ))}

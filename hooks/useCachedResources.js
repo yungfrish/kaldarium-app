@@ -23,23 +23,23 @@ export default function useCachedResources() {
     }
   };
 
-  const getContents = async () => {
-    const { data, error } = await supabase.from("contents").select("*");
+  // const getContents = async () => {
+  //   const { data, error } = await supabase.from("contents").select("*");
 
-    const contentsObject = {};
-    const contentsLength = data.length;
+  //   const contentsObject = {};
+  //   const contentsLength = data.length;
 
-    for (let i = 0; i < contentsLength; i++) {
-      const content = data[i];
-      contentsObject[content.identifier] = content;
-    }
+  //   for (let i = 0; i < contentsLength; i++) {
+  //     const content = data[i];
+  //     contentsObject[content.identifier] = content;
+  //   }
 
-    if (error) {
-      console.error("error", error);
-    } else {
-      await storeData("KaldariumContents", contentsObject);
-    }
-  };
+  //   if (error) {
+  //     console.error("error", error);
+  //   } else {
+  //     await storeData("KaldariumContents", contentsObject);
+  //   }
+  // };
 
   const getPests = async () => {
     const { data, error } = await supabase.from("pests").select("*");
@@ -86,9 +86,8 @@ export default function useCachedResources() {
     if (currentRevision !== version[0].revision.toString()) {
       await storeData("KaldariumRevision", version[0].revision);
 
-      console.log("Revising data...");
       await getPlants();
-      await getContents();
+      // await getContents();
       await getPests();
       await getPestsPlantsRelations();
     }
