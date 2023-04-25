@@ -44,7 +44,7 @@ export default function OnboardingPlantsScreen({ navigation }) {
           </View>
           <View className="flex flex-grow flex-row flex-wrap p-32 pt-0 align-start">
             {plants.map((plant, index) => (
-              <View key={index} className="flex flex-grow">
+              <View key={`${plant.id}-${index}`} className="flex max-w-[50%]">
                 <PlantOnboarding
                   plant={plant}
                   index={index}

@@ -2,11 +2,17 @@ import { useGetObjectValue } from "@storage";
 import { Button } from "@ui/Button/Button";
 import { FadeInView } from "@ui/FadeInView/FadeInView";
 import { Typography } from "@ui/Typography/Typography";
-import { View, ImageBackground, Image } from "react-native";
+import { View, ImageBackground, Image, Text } from "react-native";
 
 export default function OnboardingSplashScreen({ navigation }) {
   const { data: contents, isLoading } = useGetObjectValue("KaldariumContents");
-  console.log(contents);
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
+
+  console.log({ contents });
+
   return (
     <FadeInView>
       <ImageBackground
@@ -31,20 +37,18 @@ export default function OnboardingSplashScreen({ navigation }) {
         </View>
         <View className="flex pl-32 pr-[116] justify-start gap-y-2">
           <Typography size="h2" color="text-orange-dark">
-            Willkommen
+            {contents["onboardingSplash"].content.title}
           </Typography>
           <Typography size="h1" color="text-white">
-            Schön, dass Du da bist.
+            {contents["onboardingSplash"].content.subtitle}
           </Typography>
           <Typography size="copy" color="text-white">
-            Kaldarium ist die App für jede Person, die gerne Gemüse anbaut. Sie
-            hilft dir dabei, dein Gemüse erfolgreich anzubauen, zu pflegen und
-            zu ernten.
+            {contents["onboardingSplash"].content.content}
           </Typography>
         </View>
         <View className="flex flex-grow px-16 pb-[40] items-end justify-end">
           <Button
-            text="Jetzt loslegen"
+            text={contents["onboardingSplash"].content.button}
             onPress={() => navigation.navigate("OnboardingPlants")}
           />
         </View>

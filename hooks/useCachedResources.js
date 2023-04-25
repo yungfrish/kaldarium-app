@@ -26,10 +26,18 @@ export default function useCachedResources() {
   const getContents = async () => {
     const { data, error } = await supabase.from("contents").select("*");
 
+    const contentsObject = {};
+    const contentsLength = data.length;
+
+    for (let i = 0; i < contentsLength; i++) {
+      const content = data[i];
+      contentsObject[content.identifier] = content;
+    }
+
     if (error) {
       console.error("error", error);
     } else {
-      await storeData("KaldariumContents", data);
+      await storeData("KaldariumContents", contentsObject);
     }
   };
 
@@ -40,6 +48,16 @@ export default function useCachedResources() {
       console.error("error", error);
     } else {
       await storeData("KaldariumPests", data);
+    }
+  };
+
+  const getPestsPlantsRelations = async () => {
+    const { data, error } = await supabase.from("pests_plants").select("*");
+
+    if (error) {
+      console.error("error", error);
+    } else {
+      await storeData("KaldariumPestsPlantsRelations", data);
     }
   };
 
@@ -68,9 +86,11 @@ export default function useCachedResources() {
     if (currentRevision !== version[0].revision.toString()) {
       await storeData("KaldariumRevision", version[0].revision);
 
+      console.log("Revising data...");
       await getPlants();
       await getContents();
       await getPests();
+      await getPestsPlantsRelations();
     }
   };
 

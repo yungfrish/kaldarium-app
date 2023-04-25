@@ -25,7 +25,7 @@ export const RemovePlantModal = ({
         <View className="flex flex-row items-center">
           <Image
             source={{
-              uri: `${KALDARIUM_SUPABASE_IMAGE_BUCKET_URL}/plants/${selectedPlant?.title}.png`,
+              uri: `${KALDARIUM_SUPABASE_IMAGE_BUCKET_URL}/plants/${selectedPlant?.imagename}.png`,
             }}
             style={{ width: 40, height: 40 }}
             className="mr-2"

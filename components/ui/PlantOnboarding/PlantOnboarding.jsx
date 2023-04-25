@@ -7,6 +7,7 @@ import { View, Image, Pressable } from "react-native";
 
 export const PlantOnboarding = ({ plant, index, onSelectPlant }) => {
   const [selected, setSelected] = useState(false);
+
   return (
     <Pressable
       className={`flex items-center bg-white/10 rounded-20 border border-transparent ${
@@ -23,12 +24,12 @@ export const PlantOnboarding = ({ plant, index, onSelectPlant }) => {
       <View className="pt-[19] px-[19] pb-[23]">
         <Image
           source={{
-            uri: `${KALDARIUM_SUPABASE_IMAGE_BUCKET_URL}/plants/${plant.title}.png`,
+            uri: `${KALDARIUM_SUPABASE_IMAGE_BUCKET_URL}/plants/${plant.imagename}.png`,
           }}
           style={{ width: 115, height: 115 }}
         />
       </View>
-      <View className="px-5 pb-6">
+      <View className="pb-6">
         <Typography
           size="h3"
           color={`${selected ? "text-yellow" : "text-white"}`}

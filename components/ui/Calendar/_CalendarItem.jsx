@@ -6,9 +6,10 @@ import { Image, Pressable, View } from "react-native";
 export const CalendarItem = ({ plant, index }) => {
   return (
     <View className="flex flex-row mb-2">
-      {plant?.status.length &&
-        plant.status.map((status) => (
+      {plant?.status.length ? (
+        plant.status.map((status, index) => (
           <Pressable
+            key={`${plant.id}-${index}`}
             style={{
               width: 87 * (status.end - status.start + 1) + 1,
               height: 56,
@@ -28,7 +29,7 @@ export const CalendarItem = ({ plant, index }) => {
               <>
                 <Image
                   source={{
-                    uri: `${KALDARIUM_SUPABASE_IMAGE_BUCKET_URL}/plants/${plant.title}.png`,
+                    uri: `${KALDARIUM_SUPABASE_IMAGE_BUCKET_URL}/plants/${plant.imagename}.png`,
                   }}
                   style={{ width: 40, height: 40 }}
                   className="mx-[10px]"
@@ -39,7 +40,10 @@ export const CalendarItem = ({ plant, index }) => {
               </>
             )}
           </Pressable>
-        ))}
+        ))
+      ) : (
+        <></>
+      )}
     </View>
   );
 };

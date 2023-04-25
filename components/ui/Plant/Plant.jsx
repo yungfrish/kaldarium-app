@@ -59,7 +59,7 @@ export const Plant = ({ plant, index, active, onActionPress, onPress }) => {
       <Pressable className="flex items-center" onPress={() => onPress(plant)}>
         <Image
           source={{
-            uri: `${KALDARIUM_SUPABASE_IMAGE_BUCKET_URL}/plants/${plant.title}.png`,
+            uri: `${KALDARIUM_SUPABASE_IMAGE_BUCKET_URL}/plants/${plant.imagename}.png`,
           }}
           style={{ width: 100, height: 100 }}
           className="mb-3"
